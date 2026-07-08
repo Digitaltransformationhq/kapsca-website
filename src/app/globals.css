@@ -1,26 +1,108 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   KAPS & Co. — Design System
+   Brand palette locked from the firm profile:
+   Deep Navy (authority) · Accent Green (growth) · Cloud / Ink
+   ============================================================ */
+
+@theme {
+  /* Navy — primary brand / authority */
+  --color-navy-50: #f0f4f9;
+  --color-navy-100: #dbe5f0;
+  --color-navy-200: #b7c9de;
+  --color-navy-300: #8ba7c8;
+  --color-navy-400: #557299;
+  --color-navy-500: #2f507c;
+  --color-navy-600: #1f3a5c;
+  --color-navy-700: #1b365d; /* brand navy */
+  --color-navy-800: #142a4a;
+  --color-navy-900: #0f2039;
+  --color-navy-950: #0a1728;
+
+  /* Accent — growth / green */
+  --color-accent-50: #eef8e9;
+  --color-accent-100: #d7efc9;
+  --color-accent-200: #b2e199;
+  --color-accent-300: #86cf66;
+  --color-accent-400: #6bc047;
+  --color-accent-500: #4ea72e; /* brand green */
+  --color-accent-600: #3d8a22;
+  --color-accent-700: #2f6c1b;
+
+  /* Neutrals */
+  --color-ink: #202a38;
+  --color-cloud: #f4f6f9;
+  --color-mist: #e7edf4;
+
+  /* Fonts */
+  --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* Easing / motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Base ---------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-accent-500);
+  color: #fff;
+}
+
+/* Utilities ----------------------------------------------- */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  /* Section container */
+  .container-kaps {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  /* Subtle film-grain texture for premium depth */
+  .grain {
+    position: relative;
+  }
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Balanced multi-line headings */
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
