@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useConsultation } from "./consultation";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -30,6 +31,7 @@ const rise = {
 };
 
 export function About() {
+  const openConsult = useConsultation();
   return (
     <section id="about" data-section="about" className="relative bg-cloud">
       <div className="container-kaps pt-20 pb-6 sm:pt-28 sm:pb-8">
@@ -175,8 +177,8 @@ export function About() {
               ))}
 
               {/* Footer — restrained CTA */}
-              <a
-                href="#contact"
+              <button
+                onClick={openConsult}
                 className="group mt-6 inline-flex items-center gap-2 text-sm font-600 text-accent-400 transition-colors hover:text-accent-300"
               >
                 Talk to a partner
@@ -193,7 +195,7 @@ export function About() {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </a>
+              </button>
             </div>
           </motion.div>
         </div>

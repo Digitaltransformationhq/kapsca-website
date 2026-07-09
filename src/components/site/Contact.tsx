@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { Logo } from "./Logo";
 import { useScrollNav } from "./scroll-nav";
+import { useConsultation } from "./consultation";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -25,6 +26,7 @@ const FOOTER_LINKS = [
 
 export function Contact() {
   const { go } = useScrollNav();
+  const openConsult = useConsultation();
 
   return (
     <section
@@ -73,15 +75,15 @@ export function Contact() {
               transition={{ duration: 0.8, delay: 0.2, ease }}
               className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
             >
-              <a
-                href="mailto:office@kapsca.in?subject=Consultation%20Request"
+              <button
+                onClick={openConsult}
                 className="group inline-flex items-center justify-center gap-2 rounded-xl bg-accent-500 px-6 py-3.5 text-base font-600 text-white shadow-[0_12px_30px_-14px_rgba(78,167,46,0.6)] transition-all hover:bg-accent-600"
               >
                 Book a Consultation
                 <svg viewBox="0 0 16 16" className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none">
                   <path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </a>
+              </button>
             </motion.div>
 
             {/* Secondary contacts — editorial inline, not a card */}

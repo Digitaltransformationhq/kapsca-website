@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Logo } from "./Logo";
 import { useScrollNav } from "./scroll-nav";
+import { useConsultation } from "./consultation";
 
 const LINKS = [
   { label: "Home", id: "top" },
@@ -15,6 +16,7 @@ const LINKS = [
 
 export function Navbar() {
   const { active, go } = useScrollNav();
+  const openConsult = useConsultation();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -86,7 +88,7 @@ export function Navbar() {
           {/* Right cluster */}
           <div className="flex items-center gap-2">
             <button
-              onClick={() => navigate("contact")}
+              onClick={openConsult}
               className="group hidden items-center gap-2 rounded-xl bg-accent-500 px-5 py-2.5 text-sm font-600 text-white shadow-[0_8px_22px_-12px_rgba(78,167,46,0.55)] transition-all hover:bg-accent-600 sm:inline-flex"
             >
               Book a Consultation
@@ -167,7 +169,10 @@ export function Navbar() {
                     +91 97253 39233
                   </a>
                   <button
-                    onClick={() => navigate("contact")}
+                    onClick={() => {
+                      setOpen(false);
+                      openConsult();
+                    }}
                     className="rounded-full bg-accent-500 px-5 py-3 text-center text-sm font-600 text-white"
                   >
                     Book a Consultation

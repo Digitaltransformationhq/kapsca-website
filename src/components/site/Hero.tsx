@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { animate, motion, useReducedMotion } from "motion/react";
+import { useConsultation } from "./consultation";
 
 const STATS = [
   { to: 750, suffix: "+", pad: 0, label: "Clients served" },
@@ -55,6 +56,7 @@ function Counter({
 
 export function Hero() {
   const reduce = useReducedMotion();
+  const openConsult = useConsultation();
 
   const rise = (delay: number) => ({
     initial: reduce ? {} : { opacity: 0, y: 24 },
@@ -97,8 +99,8 @@ export function Hero() {
               {...rise(0.24)}
               className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
             >
-              <a
-                href="#contact"
+              <button
+                onClick={openConsult}
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent-500 px-6 py-3.5 text-base font-600 text-white shadow-[0_12px_30px_-14px_rgba(78,167,46,0.6)] transition-all hover:bg-accent-600 hover:shadow-[0_16px_36px_-14px_rgba(78,167,46,0.75)] sm:w-auto"
               >
                 Book a Consultation
@@ -115,7 +117,7 @@ export function Hero() {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </a>
+              </button>
               <a
                 href="#services"
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.03] px-6 py-3.5 text-base font-500 text-white/85 backdrop-blur transition-all hover:border-white/30 hover:bg-white/[0.07] hover:text-white sm:w-auto"
