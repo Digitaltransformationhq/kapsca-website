@@ -7,7 +7,7 @@ import { useScrollNav } from "./scroll-nav";
 import { LottieEarth } from "./LottieEarth";
 
 const STATS = [
-  { to: 750, suffix: "+", pad: 0, label: "Clients served" },
+  { to: 11, suffix: "", pad: 0, label: "Service areas" },
   { to: 6, suffix: "", pad: 2, label: "Partner-led verticals" },
   { to: 12, suffix: "+", pad: 0, label: "Years of practice" },
   { to: 26, suffix: "", pad: 0, label: "States GST footprint" },
