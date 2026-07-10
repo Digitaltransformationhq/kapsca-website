@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
 import { motion } from "motion/react";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -8,51 +10,118 @@ const TEAM = [
   {
     initials: "AP",
     name: "CA. Abhishek Patel",
-    creds: "Chartered Accountant",
-    focus: "Direct Tax · Income-Tax Litigation · International Tax",
-    bio: "Heads direct-tax advisory, assessments and appellate work before CIT(A) and ITAT — advising corporates and HNIs on structuring, DTAA and tax planning.",
+    tag: "Direct Tax",
+    desc: "Leads direct-tax advisory, assessments and appellate work before CIT(A) and ITAT.",
+    photo: "/team/abhishek-patel.jpg",
   },
   {
     initials: "MP",
     name: "CA. Mayur Patel",
-    creds: "Chartered Accountant",
-    focus: "Statutory Audit · Internal Audit · Corporate Assurance",
-    bio: "Leads the firm's audit and assurance practice, with deep experience in statutory audits, internal-audit design and risk-based audit frameworks across sectors.",
+    tag: "Audit",
+    desc: "Leads the firm's statutory, internal and risk-based audit practice.",
+    photo: "/team/mayur-patel.jpg",
   },
   {
     initials: "BP",
     name: "CA. Brijesh Pitroda",
-    creds: "ACA, FAFD, LLB, M.Com",
-    focus: "Indirect Tax (GST) · Forensic Audit · Project Finance",
-    bio: "12+ years of specialised experience leading the GST and forensic-audit verticals. Treasurer, WIRC — Vadodara Branch (2025–29) and MBA faculty at KPGU.",
+    tag: "GST · Forensic",
+    desc: "12+ years leading GST, forensic audit and project finance. ACA, FAFD, LLB, M.Com.",
+    photo: "/team/brijesh-pitroda.jpg",
   },
   {
     initials: "RR",
     name: "CA. Rohit Ramani",
-    creds: "Chartered Accountant",
-    focus: "Company Law · Corporate Advisory · Insolvency",
-    bio: "Leads the corporate, legal and secretarial practice — ROC / MCA compliance, commercial agreements, IBC Section 59 voluntary liquidations and FEMA advisory.",
+    tag: "Corporate Law",
+    desc: "Leads company law, corporate advisory, insolvency and FEMA matters.",
+    photo: "/team/rohit-ramani.jpg",
   },
   {
     initials: "MS",
     name: "CA. Mukesh Suthar",
-    creds: "Chartered Accountant",
-    focus: "Bank Audit · Concurrent Audit · Credit Appraisal",
-    bio: "Leads bank-branch audits, concurrent audits and credit-appraisal work, with deep familiarity across nationalised and private bank processes and RBI norms.",
+    tag: "Bank Audit",
+    desc: "Leads bank branch audits, concurrent audits and credit-appraisal work.",
+    photo: "/team/mukesh-suthar.jpg",
   },
   {
     initials: "AK",
     name: "CA. Ajay Kapdi",
-    creds: "Chartered Accountant",
-    focus: "Management Advisory · MIS & Accounting Systems",
-    bio: "Leads management advisory, outsourced accounting and MIS — designing internal reporting systems and robust month-end close frameworks for SMEs.",
+    tag: "Advisory",
+    desc: "Leads management advisory, outsourced accounting and MIS systems.",
+    photo: "/team/ajay-kapdi.jpg",
   },
 ];
+
+type Member = (typeof TEAM)[number];
+
+// Per-photo crop tuning (object-position) so faces sit centred in the card.
+const POS: Record<string, string> = {
+  AP: "38% 30%",
+  BP: "38% 30%",
+};
+
+function TeamCard({ m, i }: { m: Member; i: number }) {
+  const [ok, setOk] = useState(true);
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 26 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.7, delay: (i % 3) * 0.08, ease }}
+      className="group aspect-[4/5] w-full max-w-[290px] [perspective:1400px]"
+    >
+      <div className="relative h-full w-full transition-transform duration-[1200ms] [transform-style:preserve-3d] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:[transform:rotateY(180deg)]">
+        {/* ---------- Front: photo ---------- */}
+        <div className="absolute inset-0 overflow-hidden rounded-[22px] bg-navy-800 shadow-[0_24px_50px_-34px_rgba(10,23,40,0.5)] [-webkit-backface-visibility:hidden] [backface-visibility:hidden]">
+          {ok ? (
+            <Image
+              src={m.photo}
+              alt={m.name}
+              fill
+              sizes="(max-width:640px) 90vw, (max-width:1024px) 45vw, 30vw"
+              className="object-cover"
+              style={{ objectPosition: POS[m.initials] ?? "50% 50%" }}
+              onError={() => setOk(false)}
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy-600 to-navy-900">
+              <span className="font-display text-5xl font-800 text-white/90">
+                {m.initials}
+              </span>
+            </div>
+          )}
+
+          {/* name overlay */}
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/90 via-navy-950/20 to-transparent p-4 pt-16">
+            <h3 className="font-display text-base font-700 leading-tight text-white">
+              {m.name}
+            </h3>
+          </div>
+        </div>
+
+        {/* ---------- Back: details ---------- */}
+        <div className="absolute inset-0 flex flex-col justify-center rounded-[22px] bg-navy-800 p-7 ring-1 ring-inset ring-white/10 shadow-[0_24px_50px_-34px_rgba(10,23,40,0.5)] [-webkit-backface-visibility:hidden] [backface-visibility:hidden] [transform:rotateY(180deg)]">
+          <span className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-accent-500/15 blur-2xl" />
+          <div className="relative">
+            <span className="mb-4 block h-px w-8 bg-accent-500" />
+            <h3 className="font-display text-lg font-700 leading-tight text-white">
+              {m.name}
+            </h3>
+            <p className="mt-1.5 text-[11px] font-600 uppercase tracking-[0.16em] text-accent-300">
+              {m.tag}
+            </p>
+            <p className="mt-4 text-sm leading-relaxed text-white/65">{m.desc}</p>
+          </div>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
 
 export function Team() {
   return (
     <section id="team" data-section="team" className="relative bg-cloud">
-      <div className="container-kaps pt-20 pb-6 sm:pt-28 sm:pb-8">
+      <div className="container-kaps pt-28 pb-6 sm:pt-40 sm:pb-8">
         {/* Header */}
         <div className="grid gap-6 lg:grid-cols-[auto_1fr] lg:items-end lg:gap-16">
           <div className="max-w-2xl">
@@ -86,40 +155,9 @@ export function Team() {
         </div>
 
         {/* Grid */}
-        <div className="mt-14 grid gap-4 sm:mt-16 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto mt-14 grid grid-cols-1 justify-items-center gap-14 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3">
           {TEAM.map((m, i) => (
-            <motion.article
-              key={m.initials}
-              initial={{ opacity: 0, y: 26 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.7, delay: (i % 3) * 0.08, ease }}
-              className="group rounded-2xl border border-navy-100 bg-white p-6 transition-all duration-300 hover:border-accent-400/60 hover:shadow-[0_24px_50px_-30px_rgba(10,23,40,0.35)] sm:p-7"
-            >
-              <div className="flex items-center gap-4">
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-navy-700 font-display text-lg font-700 text-white ring-2 ring-inset ring-accent-500/30 transition-transform duration-300 group-hover:scale-105">
-                  {m.initials}
-                </span>
-                <div className="min-w-0">
-                  <h3 className="font-display text-[1.05rem] font-700 leading-tight text-navy-700">
-                    {m.name}
-                  </h3>
-                  <p className="mt-1 text-xs font-600 text-accent-600">
-                    {m.creds}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-5 border-t border-navy-100 pt-4">
-                <p className="mb-1.5 text-[10.5px] font-600 uppercase tracking-[0.16em] text-navy-400">
-                  Focus
-                </p>
-                <p className="text-sm font-600 text-navy-600">{m.focus}</p>
-                <p className="mt-3 text-sm leading-relaxed text-navy-500">
-                  {m.bio}
-                </p>
-              </div>
-            </motion.article>
+            <TeamCard key={m.initials} m={m} i={i} />
           ))}
         </div>
       </div>

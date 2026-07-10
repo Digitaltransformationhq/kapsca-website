@@ -54,7 +54,7 @@ export function Navbar() {
           <button
             onClick={() => navigate("top")}
             aria-label="KAPS & Co. home"
-            className="shrink-0"
+            className="flex shrink-0 items-center self-center"
           >
             <Logo />
           </button>
@@ -91,7 +91,7 @@ export function Navbar() {
               onClick={openConsult}
               className="group hidden items-center gap-2 rounded-xl bg-accent-500 px-5 py-2.5 text-sm font-600 text-white shadow-[0_8px_22px_-12px_rgba(78,167,46,0.55)] transition-all hover:bg-accent-600 sm:inline-flex"
             >
-              Book a Consultation
+              Book an Appointment
               <svg
                 viewBox="0 0 16 16"
                 className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
@@ -175,7 +175,7 @@ export function Navbar() {
                     }}
                     className="rounded-full bg-accent-500 px-5 py-3 text-center text-sm font-600 text-white"
                   >
-                    Book a Consultation
+                    Book an Appointment
                   </button>
                 </li>
               </ul>

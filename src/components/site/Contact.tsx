@@ -37,7 +37,7 @@ export function Contact() {
       {/* soft brand wash */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_80%_at_85%_0%,rgba(78,167,46,0.12),transparent_60%)]" />
 
-      <div className="container-kaps relative flex flex-1 flex-col justify-center pt-28 pb-16 sm:pt-32">
+      <div className="container-kaps relative flex flex-1 flex-col justify-center pt-40 pb-16 sm:pt-48">
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           {/* ---------- Left: message + actions ---------- */}
           <div className="flex flex-col justify-center">
@@ -79,44 +79,13 @@ export function Contact() {
                 onClick={openConsult}
                 className="group inline-flex items-center justify-center gap-2 rounded-xl bg-accent-500 px-6 py-3.5 text-base font-600 text-white shadow-[0_12px_30px_-14px_rgba(78,167,46,0.6)] transition-all hover:bg-accent-600"
               >
-                Book a Consultation
+                Book an Appointment
                 <svg viewBox="0 0 16 16" className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none">
                   <path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
             </motion.div>
 
-            {/* Secondary contacts — editorial inline, not a card */}
-            <motion.div
-              {...rise}
-              transition={{ duration: 0.8, delay: 0.28, ease }}
-              className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/10 pt-7 text-sm"
-            >
-              <span className="flex flex-col">
-                <span className="text-[11px] font-600 uppercase tracking-[0.16em] text-white/40">
-                  Email
-                </span>
-                <a href="mailto:office@kapsca.in" className="mt-1 font-500 text-white transition-colors hover:text-accent-400">
-                  office@kapsca.in
-                </a>
-              </span>
-              <span className="flex flex-col">
-                <span className="text-[11px] font-600 uppercase tracking-[0.16em] text-white/40">
-                  Website
-                </span>
-                <a href="https://www.kapsca.in" className="mt-1 font-500 text-white transition-colors hover:text-accent-400">
-                  www.kapsca.in
-                </a>
-              </span>
-              <span className="flex flex-col">
-                <span className="text-[11px] font-600 uppercase tracking-[0.16em] text-white/40">
-                  GSTIN
-                </span>
-                <span className="mt-1 font-mono text-[0.9rem] font-500 text-white">
-                  24AAYFK1347G1Z4
-                </span>
-              </span>
-            </motion.div>
           </div>
 
           {/* ---------- Right: office location + map ---------- */}
@@ -170,8 +139,8 @@ export function Contact() {
       </div>
 
       {/* ---------- Footer ---------- */}
-      <footer className="relative border-t border-white/10">
-        <div className="container-kaps py-10">
+      <footer className="relative overflow-hidden border-t border-white/10">
+        <div className="container-kaps pt-12">
           <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
             <div className="max-w-xs">
               <Logo />
@@ -180,12 +149,12 @@ export function Contact() {
                 Accountants in Vadodara, Gujarat.
               </p>
             </div>
-            <nav className="flex flex-wrap gap-x-8 gap-y-3">
+            <nav className="grid grid-cols-2 gap-x-20 gap-y-4 sm:mr-12 lg:mr-24">
               {FOOTER_LINKS.map((l) => (
                 <button
                   key={l.id}
                   onClick={() => go(l.id)}
-                  className="text-sm font-500 text-white/60 transition-colors hover:text-white"
+                  className="text-left text-sm font-500 text-white/60 transition-colors hover:text-white"
                 >
                   {l.label}
                 </button>
@@ -194,11 +163,23 @@ export function Contact() {
           </div>
 
           <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between">
-            <p>
-              © 2026 KAPS &amp; Co., Chartered Accountants · FRN 156667W · GSTIN
-              24AAYFK1347G1Z4
-            </p>
+            <p>© 2026 KAPS &amp; Co. · Crafted in Vadodara · All rights reserved.</p>
             <p>Vadodara · Gujarat · India</p>
+          </div>
+        </div>
+
+        {/* Oversized wordmark anchoring the footer */}
+        <div
+          aria-hidden
+          className="pointer-events-none mt-6 select-none overflow-hidden"
+        >
+          <div className="translate-y-[0.12em] whitespace-nowrap text-center font-sans text-[17vw] font-900 leading-[0.78] tracking-tight">
+            <span className="bg-gradient-to-b from-white/70 to-white/[0.06] bg-clip-text text-transparent">
+              KAPS&nbsp;&amp;
+            </span>{" "}
+            <span className="bg-gradient-to-b from-accent-400 to-accent-600/[0.12] bg-clip-text text-transparent">
+              Co.
+            </span>
           </div>
         </div>
       </footer>

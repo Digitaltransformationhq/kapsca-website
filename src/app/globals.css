@@ -38,6 +38,7 @@
   /* Fonts */
   --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-jetbrains: var(--font-jetbrains), ui-monospace, monospace;
 
   /* Easing / motion */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -91,6 +92,40 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Gradient glow border — a lit 1px edge that warms to brand green on hover.
+   Uses the mask-composite trick so only the border ring is painted. */
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0.04) 42%,
+    rgba(255, 255, 255, 0) 78%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  transition: background 0.5s ease;
+}
+.glow-border:hover::before {
+  background: linear-gradient(
+    150deg,
+    rgba(78, 167, 46, 0.85),
+    rgba(78, 167, 46, 0.28) 45%,
+    rgba(78, 167, 46, 0) 80%
+  );
 }
 
 /* Respect reduced motion */

@@ -138,8 +138,10 @@ export function Services() {
     >
       {/* soft top separation from the light section above */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      {/* ambient brand lighting */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(80%_45%_at_50%_0%,rgba(78,167,46,0.07),transparent_55%)]" />
 
-      <div className="container-kaps pt-20 pb-6 sm:pt-28 sm:pb-8">
+      <div className="container-kaps pt-28 pb-6 sm:pt-40 sm:pb-8">
         {/* Header */}
         <div className="grid gap-6 lg:grid-cols-[auto_1fr] lg:items-end lg:gap-16">
           <div className="max-w-2xl">
@@ -174,7 +176,7 @@ export function Services() {
         </div>
 
         {/* Grid */}
-        <div className="mt-14 grid gap-4 sm:mt-16 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-5 sm:mt-16 md:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((s, i) => (
             <motion.article
               key={s.no}
@@ -182,44 +184,40 @@ export function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.7, delay: (i % 3) * 0.08, ease }}
-              className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-6 transition-colors duration-300 hover:border-accent-500/40 hover:bg-white/[0.045] sm:p-7"
+              className="glow-border group relative flex flex-col overflow-hidden rounded-2xl bg-gradient-to-b from-white/[0.045] to-white/[0.01] p-6 transition-[transform,box-shadow] duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:shadow-[0_0_34px_-6px_rgba(78,167,46,0.4),0_34px_60px_-30px_rgba(0,0,0,0.72)] sm:p-7"
             >
-              {/* top accent line grows on hover */}
-              <span className="absolute inset-x-6 top-0 h-px origin-left scale-x-0 bg-accent-500 transition-transform duration-500 group-hover:scale-x-100" />
+              {/* oversized ghost index */}
+              <span className="pointer-events-none absolute -top-6 right-2 select-none font-display text-[7rem] font-800 leading-none text-white/[0.03] transition-colors duration-500 group-hover:text-accent-500/[0.08]">
+                {s.no}
+              </span>
 
-              <div className="flex items-center justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-500/10 text-accent-400 ring-1 ring-inset ring-accent-500/20 transition-colors group-hover:bg-accent-500/15">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-[22px] w-[22px]"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    {s.icon}
-                  </svg>
-                </span>
-                <span className="font-mono text-sm font-600 text-white/25">
-                  {s.no}
-                </span>
-              </div>
+              {/* icon — bare line mark */}
+              <svg
+                viewBox="0 0 24 24"
+                className="relative h-9 w-9 text-accent-400 transition-all duration-500 group-hover:text-accent-300 group-hover:[filter:drop-shadow(0_4px_12px_rgba(78,167,46,0.55))]"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                {s.icon}
+              </svg>
 
-              <h3 className="mt-5 font-display text-lg font-700 text-white">
+              <h3 className="relative mt-6 font-display text-xl font-700 tracking-tight text-white">
                 {s.title}
               </h3>
-              <p className="mt-1.5 text-sm font-500 text-accent-400/90">
+              <p className="relative mt-1 text-[13px] font-500 text-accent-400/90">
                 {s.tag}
               </p>
 
-              <ul className="mt-5 space-y-2.5 border-t border-white/8 pt-5">
+              <ul className="relative mt-6 flex-1 space-y-3 border-t border-white/[0.07] pt-6">
                 {s.points.map((p) => (
                   <li
                     key={p}
-                    className="flex items-start gap-2.5 text-sm leading-snug text-white/60"
+                    className="flex items-start gap-3 text-[13.5px] leading-snug text-white/55"
                   >
-                    <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-accent-500" />
+                    <span className="mt-2 h-px w-3.5 shrink-0 bg-accent-500/70 transition-all duration-300 group-hover:w-5 group-hover:bg-accent-400" />
                     {p}
                   </li>
                 ))}

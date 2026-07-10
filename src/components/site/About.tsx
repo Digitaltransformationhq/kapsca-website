@@ -1,7 +1,7 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { motion } from "motion/react";
-import { useConsultation } from "./consultation";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -16,12 +16,56 @@ const PRACTICE = [
   "Management Advisory",
 ];
 
-const CREDENTIALS: { k: string; v: string; wide?: boolean }[] = [
-  { k: "Legal Status", v: "Partnership Firm" },
-  { k: "Firm Reg. No.", v: "156667W" },
-  { k: "GSTIN", v: "24AAYFK1347G1Z4" },
-  { k: "PAN", v: "AAYFK1347G" },
-  { k: "Head Office", v: "Trivia Complex, Race Course Road, Vadodara – 390 007", wide: true },
+const ICONS: Record<string, ReactNode> = {
+  partner: (
+    <>
+      <circle cx="9" cy="8" r="3.2" />
+      <path d="M3.5 20a5.5 5.5 0 0 1 11 0" />
+      <path d="M15.5 11.5l2 2 3.5-3.5" />
+    </>
+  ),
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 7.5V12l3 2" />
+    </>
+  ),
+  bond: (
+    <>
+      <path d="M9 12h6" />
+      <path d="M10 8H8a4 4 0 0 0 0 8h2" />
+      <path d="M14 16h2a4 4 0 0 0 0-8h-2" />
+    </>
+  ),
+  window: (
+    <>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="2.5" />
+      <path d="M3.5 9h17M9 20.5v-11" />
+    </>
+  ),
+};
+
+const WHY_US: { icon: string; title: string; desc: string }[] = [
+  {
+    icon: "partner",
+    title: "Partner-led, always",
+    desc: "Every engagement is supervised start to finish by a partner — never delegated away.",
+  },
+  {
+    icon: "clock",
+    title: "Deadlines honoured",
+    desc: "Statutory and client deadlines are treated as inviolable commitments.",
+  },
+  {
+    icon: "bond",
+    title: "Built to last",
+    desc: "Many clients have stayed with our partners for more than a decade.",
+  },
+  {
+    icon: "window",
+    title: "A single window",
+    desc: "Assurance, tax, forensic and advisory — all under one roof.",
+  },
 ];
 
 const rise = {
@@ -31,7 +75,6 @@ const rise = {
 };
 
 export function About() {
-  const openConsult = useConsultation();
   return (
     <section id="about" data-section="about" className="relative bg-cloud">
       <div className="container-kaps pt-20 pb-6 sm:pt-28 sm:pb-8">
@@ -117,85 +160,52 @@ export function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.85, delay: 0.1, ease }}
-            className="lg:col-span-5"
+            className="lg:col-span-5 lg:self-start"
           >
-            <div className="rounded-2xl border border-navy-900/10 bg-navy-800 p-7 ring-1 ring-inset ring-white/5 sm:p-8">
-              {/* Masthead — seal + title */}
-              <div className="flex items-center gap-4 border-b border-white/10 pb-6">
-                <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-accent-500/40">
-                  <span className="absolute inset-1 rounded-full border border-dashed border-white/15" />
-                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-                    <path
-                      d="M12 3l7 3v5c0 4.2-2.9 7.4-7 8.5-4.1-1.1-7-4.3-7-8.5V6l7-3z"
-                      stroke="#4ea72e"
-                      strokeWidth="1.6"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M9 12l2 2 4-4"
-                      stroke="#ffffff"
-                      strokeWidth="1.6"
+            <div className="glow-border relative overflow-hidden rounded-2xl bg-navy-800 p-6 sm:p-7">
+              {/* soft corner light */}
+              <span className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-accent-500/10 blur-3xl" />
+
+              {/* Header */}
+              <div className="relative flex items-center gap-3">
+                <span className="h-px w-7 bg-accent-500" />
+                <h3 className="font-display text-lg font-700 leading-tight text-white">
+                  Why firms choose us
+                </h3>
+              </div>
+              <p className="relative mt-2 text-sm font-500 text-white/45">
+                The difference a partner-led firm makes.
+              </p>
+
+              {/* Pillars — bare icons, hairline-separated rows */}
+              <ul className="relative mt-3">
+                {WHY_US.map((w) => (
+                  <li
+                    key={w.title}
+                    className="group/w flex gap-4 border-t border-white/[0.07] py-3.5 first:border-t-0"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="mt-0.5 h-[26px] w-[26px] shrink-0 text-accent-400 transition-[transform,color,filter] duration-300 group-hover/w:-translate-y-0.5 group-hover/w:text-accent-300 group-hover/w:[filter:drop-shadow(0_3px_10px_rgba(78,167,46,0.55))]"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
-                <div>
-                  <h3 className="font-display text-lg font-700 leading-tight text-white">
-                    Firm Credentials
-                  </h3>
-                  <p className="mt-0.5 text-xs font-500 text-white/45">
-                    Registered with the ICAI · FRN 156667W
-                  </p>
-                </div>
-              </div>
-
-              {/* Ledger — dotted-leader rows, official registration numbers */}
-              <dl className="mt-6 space-y-0.5">
-                {CREDENTIALS.filter((r) => !r.wide).map((row) => (
-                  <div
-                    key={row.k}
-                    className="flex items-baseline gap-3 py-2.5"
-                  >
-                    <dt className="shrink-0 text-sm text-white/50">{row.k}</dt>
-                    <span className="mb-1 min-w-6 flex-1 border-b border-dotted border-white/20" />
-                    <dd className="shrink-0 font-mono text-sm tracking-tight text-white">
-                      {row.v}
-                    </dd>
-                  </div>
+                    >
+                      {ICONS[w.icon]}
+                    </svg>
+                    <div>
+                      <p className="font-display text-[15px] font-700 tracking-tight text-white">
+                        {w.title}
+                      </p>
+                      <p className="mt-1 text-sm leading-relaxed text-white/55">
+                        {w.desc}
+                      </p>
+                    </div>
+                  </li>
                 ))}
-              </dl>
-
-              {/* Head office — full width */}
-              {CREDENTIALS.filter((r) => r.wide).map((row) => (
-                <div key={row.k} className="mt-4 border-t border-white/10 pt-4">
-                  <dt className="text-sm text-white/50">{row.k}</dt>
-                  <dd className="mt-1 text-sm leading-snug text-white">
-                    {row.v}
-                  </dd>
-                </div>
-              ))}
-
-              {/* Footer — restrained CTA */}
-              <button
-                onClick={openConsult}
-                className="group mt-6 inline-flex items-center gap-2 text-sm font-600 text-accent-400 transition-colors hover:text-accent-300"
-              >
-                Talk to a partner
-                <svg
-                  viewBox="0 0 16 16"
-                  className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
-                  fill="none"
-                >
-                  <path
-                    d="M3 8h9M8 4l4 4-4 4"
-                    stroke="currentColor"
-                    strokeWidth="1.7"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
+              </ul>
             </div>
           </motion.div>
         </div>

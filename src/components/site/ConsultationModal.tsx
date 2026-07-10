@@ -198,7 +198,7 @@ export function ConsultationModal({
               <>
                 <div className="pr-8">
                   <span className="text-xs font-600 uppercase tracking-[0.22em] text-accent-600">
-                    Book a Consultation
+                    Book an Appointment
                   </span>
                   <h3 className="mt-2 font-display text-2xl font-700 leading-tight text-navy-700">
                     Tell us a little about your requirements

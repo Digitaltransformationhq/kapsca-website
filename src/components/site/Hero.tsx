@@ -1,9 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { animate, motion, useReducedMotion } from "motion/react";
 import { useConsultation } from "./consultation";
+import { useScrollNav } from "./scroll-nav";
+import { LottieEarth } from "./LottieEarth";
 
 const STATS = [
   { to: 750, suffix: "+", pad: 0, label: "Clients served" },
@@ -57,6 +58,7 @@ function Counter({
 export function Hero() {
   const reduce = useReducedMotion();
   const openConsult = useConsultation();
+  const { go } = useScrollNav();
 
   const rise = (delay: number) => ({
     initial: reduce ? {} : { opacity: 0, y: 24 },
@@ -103,7 +105,7 @@ export function Hero() {
                 onClick={openConsult}
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent-500 px-6 py-3.5 text-base font-600 text-white shadow-[0_12px_30px_-14px_rgba(78,167,46,0.6)] transition-all hover:bg-accent-600 hover:shadow-[0_16px_36px_-14px_rgba(78,167,46,0.75)] sm:w-auto"
               >
-                Book a Consultation
+                Book an Appointment
                 <svg
                   viewBox="0 0 16 16"
                   className="h-4 w-4 transition-transform group-hover:translate-x-1"
@@ -118,8 +120,8 @@ export function Hero() {
                   />
                 </svg>
               </button>
-              <a
-                href="#services"
+              <button
+                onClick={() => go("services")}
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.03] px-6 py-3.5 text-base font-500 text-white/85 backdrop-blur transition-all hover:border-white/30 hover:bg-white/[0.07] hover:text-white sm:w-auto"
               >
                 Explore our services
@@ -136,25 +138,18 @@ export function Hero() {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </a>
+              </button>
             </motion.div>
           </div>
 
-          {/* ---------- Right column: illustration ---------- */}
+          {/* ---------- Right column: Earth & Connections animation ---------- */}
           <motion.div
             initial={reduce ? {} : { opacity: 0, scale: 0.94, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 0.2, ease }}
             className="relative mx-auto w-full max-w-[560px] lg:mx-0"
           >
-            <Image
-              src="/hero.png"
-              alt="A client and a chartered accountant from KAPS & Co. shaking hands over financial advisory"
-              width={1536}
-              height={1024}
-              priority
-              className="h-auto w-full"
-            />
+            <LottieEarth />
           </motion.div>
         </div>
 

@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@lottiefiles/dotlottie-react": "^0.19.8",
+    "cobe": "^0.6.3",
     "motion": "^12.42.2",
     "next": "16.2.10",
     "react": "19.2.4",
