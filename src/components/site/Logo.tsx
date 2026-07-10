@@ -21,12 +21,12 @@ export function Logo({ className = "", tone = "light" }: LogoProps) {
         alt="KAPS & Co. — Chartered Accountants (CA India)"
         width={1081}
         height={804}
-        className="h-10 w-auto object-contain"
+        className="h-9 w-auto object-contain"
         priority
       />
       <span className="flex flex-col items-start text-left leading-none">
         <span
-          className="font-jetbrains text-[1.02rem] font-700 tracking-tight"
+          className="font-jetbrains text-[1.02rem] font-700 tracking-[0.14em]"
           style={{ color: primary }}
         >
           KAPS &amp; Co.

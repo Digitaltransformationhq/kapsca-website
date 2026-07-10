@@ -3,7 +3,6 @@
 import { motion } from "motion/react";
 import { Logo } from "./Logo";
 import { useScrollNav } from "./scroll-nav";
-import { useConsultation } from "./consultation";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -26,7 +25,6 @@ const FOOTER_LINKS = [
 
 export function Contact() {
   const { go } = useScrollNav();
-  const openConsult = useConsultation();
 
   return (
     <section
@@ -73,17 +71,38 @@ export function Contact() {
             <motion.div
               {...rise}
               transition={{ duration: 0.8, delay: 0.2, ease }}
-              className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
+              className="mt-9 max-w-md"
             >
-              <button
-                onClick={openConsult}
-                className="group inline-flex items-center justify-center gap-2 rounded-xl bg-accent-500 px-6 py-3.5 text-base font-600 text-white shadow-[0_12px_30px_-14px_rgba(78,167,46,0.6)] transition-all hover:bg-accent-600"
+              <a
+                href="mailto:office@kapsca.in"
+                className="group flex items-center gap-4 border-t border-white/10 py-4"
               >
-                Book an Appointment
-                <svg viewBox="0 0 16 16" className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none">
-                  <path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+                <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 text-accent-400" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                 </svg>
-              </button>
+                <span className="text-[1.05rem] font-500 text-white/85 transition-colors group-hover:text-white">
+                  office@kapsca.in
+                </span>
+                <svg viewBox="0 0 16 16" className="ml-auto h-4 w-4 text-white/25 transition-all group-hover:translate-x-0.5 group-hover:text-accent-400" fill="none">
+                  <path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+
+              <a
+                href="tel:+919725339233"
+                className="group flex items-center gap-4 border-t border-white/10 py-4"
+              >
+                <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 text-accent-400" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+                <span className="text-[1.05rem] font-500 text-white/85 transition-colors group-hover:text-white">
+                  +91 97253 39233
+                </span>
+                <svg viewBox="0 0 16 16" className="ml-auto h-4 w-4 text-white/25 transition-all group-hover:translate-x-0.5 group-hover:text-accent-400" fill="none">
+                  <path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
             </motion.div>
 
           </div>

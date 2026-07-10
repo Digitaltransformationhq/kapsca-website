@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Sora, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { Disclaimer } from "@/components/site/Disclaimer";
 
 const sora = Sora({
   variable: "--font-display",
@@ -61,6 +62,7 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-navy-950 font-sans text-ink">
         {children}
+        <Disclaimer />
       </body>
     </html>
   );

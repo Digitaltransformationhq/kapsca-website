@@ -46,6 +46,41 @@ const Icon = {
       <path d="M12 5V3" />
     </>
   ),
+  cfo: (
+    <>
+      <rect x="3" y="4" width="18" height="13" rx="1.5" />
+      <path d="M8 21h8M12 17v4" />
+      <path d="m7 12 2.5-2.5L12 12l3.5-4" />
+    </>
+  ),
+  transaction: (
+    <>
+      <path d="M7 8h10M17 8l-3-3M17 8l-3 3" />
+      <path d="M17 16H7M7 16l3-3M7 16l3 3" />
+    </>
+  ),
+  succession: (
+    <>
+      <circle cx="12" cy="5" r="2" />
+      <circle cx="6" cy="18" r="2" />
+      <circle cx="18" cy="18" r="2" />
+      <path d="M12 7v3M6 16v-3h12v3" />
+    </>
+  ),
+  wealth: (
+    <>
+      <ellipse cx="12" cy="6" rx="6" ry="2.4" />
+      <path d="M6 6v5c0 1.3 2.7 2.4 6 2.4s6-1.1 6-2.4V6" />
+      <path d="M6 11v5c0 1.3 2.7 2.4 6 2.4s6-1.1 6-2.4v-5" />
+    </>
+  ),
+  ai: (
+    <>
+      <rect x="7" y="7" width="10" height="10" rx="1.5" />
+      <path d="M10 10h4v4h-4z" />
+      <path d="M10 4v3M14 4v3M10 17v3M14 17v3M4 10h3M4 14h3M17 10h3M17 14h3" />
+    </>
+  ),
 };
 
 const SERVICES: {
@@ -125,6 +160,66 @@ const SERVICES: {
       "Term loan & working-capital docs",
       "Credit appraisal & viability studies",
       "Restructuring & TEV studies",
+    ],
+  },
+  {
+    no: "07",
+    title: "Virtual CFO Services",
+    tag: "Finance leadership, on demand",
+    icon: Icon.cfo,
+    points: [
+      "MIS, budgeting & cash-flow control",
+      "Board & investor reporting",
+      "Financial controls & process design",
+      "Fund-raise & lender liaison",
+    ],
+  },
+  {
+    no: "08",
+    title: "Transaction Advisory",
+    tag: "Deals, diligence & valuations",
+    icon: Icon.transaction,
+    points: [
+      "Buy-side & sell-side due diligence",
+      "Business & share valuations",
+      "M&A structuring & negotiation",
+      "Deal documentation support",
+    ],
+  },
+  {
+    no: "09",
+    title: "Succession Planning",
+    tag: "Continuity across generations",
+    icon: Icon.succession,
+    points: [
+      "Family & business governance",
+      "Ownership & management transition",
+      "Wills, trusts & estate structuring",
+      "Family constitution & charters",
+    ],
+  },
+  {
+    no: "10",
+    title: "Wealth Advisory",
+    tag: "Preserving & growing capital",
+    icon: Icon.wealth,
+    points: [
+      "Portfolio & asset-allocation review",
+      "Tax-efficient investment structuring",
+      "Estate & inheritance planning",
+      "Risk & insurance advisory",
+    ],
+  },
+  {
+    no: "11",
+    title: "AI Transformation",
+    tag: "Future-ready finance & compliance",
+    icon: Icon.ai,
+    points: [
+      "Finance automation & RPA",
+      "AI-driven analytics & dashboards",
+      "Data-driven audit & reconciliation",
+      "Digital compliance workflows",
     ],
   },
 ];

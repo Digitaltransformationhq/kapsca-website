@@ -61,6 +61,7 @@ const POS: Record<string, string> = {
 
 function TeamCard({ m, i }: { m: Member; i: number }) {
   const [ok, setOk] = useState(true);
+  const [flipped, setFlipped] = useState(false);
 
   return (
     <motion.article
@@ -68,9 +69,27 @@ function TeamCard({ m, i }: { m: Member; i: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.7, delay: (i % 3) * 0.08, ease }}
-      className="group aspect-[4/5] w-full max-w-[290px] [perspective:1400px]"
+      // Desktop: flip on hover. Touch: flip on tap (no hover to rely on).
+      onPointerEnter={(e) => e.pointerType === "mouse" && setFlipped(true)}
+      onPointerLeave={(e) => e.pointerType === "mouse" && setFlipped(false)}
+      onClick={() => {
+        if (window.matchMedia("(hover: none)").matches) setFlipped((f) => !f);
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`${m.name} — ${m.tag}. Tap for details.`}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setFlipped((f) => !f);
+        }
+      }}
+      className="group aspect-[4/5] w-full max-w-[290px] cursor-pointer select-none [perspective:1400px]"
     >
-      <div className="relative h-full w-full transition-transform duration-[1200ms] [transform-style:preserve-3d] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:[transform:rotateY(180deg)]">
+      <div
+        style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
+        className="relative h-full w-full transition-transform duration-[1200ms] [transform-style:preserve-3d] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]"
+      >
         {/* ---------- Front: photo ---------- */}
         <div className="absolute inset-0 overflow-hidden rounded-[22px] bg-navy-800 shadow-[0_24px_50px_-34px_rgba(10,23,40,0.5)] [-webkit-backface-visibility:hidden] [backface-visibility:hidden]">
           {ok ? (
