@@ -42,10 +42,10 @@ export function Navbar() {
       <div className="container-kaps">
         {/* Floating glass bar */}
         <nav
-          className={`relative flex h-16 items-center justify-between rounded-2xl border border-navy-900/10 pl-4 pr-2 backdrop-blur-2xl transition-all duration-500 sm:pl-5 ${
+          className={`relative flex h-16 items-center justify-between rounded-2xl border border-navy-900/10 bg-white pl-4 pr-2 transition-all duration-500 sm:pl-5 ${
             scrolled
-              ? "bg-white/92 shadow-[0_16px_50px_-18px_rgba(10,23,40,0.35)]"
-              : "bg-white/75 shadow-[0_10px_40px_-22px_rgba(10,23,40,0.25)]"
+              ? "shadow-[0_16px_50px_-18px_rgba(10,23,40,0.35)]"
+              : "shadow-[0_10px_40px_-22px_rgba(10,23,40,0.25)]"
           }`}
         >
           {/* Subtle top glass highlight */}
