@@ -42,21 +42,21 @@ export function Navbar() {
       <div className="container-kaps">
         {/* Floating glass bar */}
         <nav
-          className={`relative flex h-16 items-center justify-between rounded-2xl border border-white/10 pl-4 pr-2 backdrop-blur-2xl transition-all duration-500 sm:pl-5 ${
+          className={`relative flex h-16 items-center justify-between rounded-2xl border border-navy-900/10 pl-4 pr-2 backdrop-blur-2xl transition-all duration-500 sm:pl-5 ${
             scrolled
-              ? "bg-navy-950/92 shadow-[0_16px_50px_-16px_rgba(0,0,0,0.85)]"
-              : "bg-navy-950/60 shadow-[0_10px_40px_-20px_rgba(0,0,0,0.6)]"
+              ? "bg-white/92 shadow-[0_16px_50px_-18px_rgba(10,23,40,0.35)]"
+              : "bg-white/75 shadow-[0_10px_40px_-22px_rgba(10,23,40,0.25)]"
           }`}
         >
           {/* Subtle top glass highlight */}
-          <span className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+          <span className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
 
           <button
             onClick={() => navigate("top")}
             aria-label="KAPS & Co. home"
             className="flex shrink-0 items-center self-center"
           >
-            <Logo />
+            <Logo tone="dark" />
           </button>
 
           {/* Center links */}
@@ -68,7 +68,9 @@ export function Navbar() {
                   <button
                     onClick={() => navigate(l.id)}
                     className={`relative block rounded-full px-4 py-2 text-sm font-500 transition-colors duration-300 ${
-                      isActive ? "text-white" : "text-white/60 hover:text-white"
+                      isActive
+                        ? "text-white"
+                        : "text-navy-500 hover:text-navy-700"
                     }`}
                   >
                     {isActive && (
@@ -112,7 +114,7 @@ export function Navbar() {
               onClick={() => setOpen((v) => !v)}
               aria-label="Toggle menu"
               aria-expanded={open}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 text-white lg:hidden"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-navy-900/15 text-navy-700 lg:hidden"
             >
               <div className="flex flex-col gap-1.5">
                 <span
@@ -143,7 +145,7 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -12, scale: 0.98 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-3 overflow-hidden rounded-3xl border border-white/10 bg-navy-950/85 p-3 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)] backdrop-blur-2xl lg:hidden"
+              className="mt-3 overflow-hidden rounded-3xl border border-navy-900/10 bg-white/95 p-3 shadow-[0_20px_60px_-22px_rgba(10,23,40,0.35)] backdrop-blur-2xl lg:hidden"
             >
               <ul className="flex flex-col gap-1">
                 {LINKS.map((l) => (
@@ -153,7 +155,7 @@ export function Navbar() {
                       className={`block w-full rounded-2xl px-4 py-3 text-left text-base font-500 transition-colors ${
                         active === l.id
                           ? "bg-accent-500 text-white"
-                          : "text-white/75 hover:bg-white/5 hover:text-white"
+                          : "text-navy-600 hover:bg-navy-900/5 hover:text-navy-900"
                       }`}
                     >
                       {l.label}
@@ -164,7 +166,7 @@ export function Navbar() {
                   <a
                     href="tel:+919725339233"
                     onClick={() => setOpen(false)}
-                    className="rounded-full border border-white/12 px-5 py-3 text-center text-sm font-500 text-white/80"
+                    className="rounded-full border border-navy-900/15 px-5 py-3 text-center text-sm font-500 text-navy-600"
                   >
                     +91 97253 39233
                   </a>
