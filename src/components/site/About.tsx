@@ -106,10 +106,11 @@ export function About() {
               transition={{ duration: 0.8, delay: 0.1, ease }}
               className="mt-6 max-w-xl text-[1.02rem] leading-relaxed text-navy-500"
             >
-              KAPS &amp; Co. is a progressive firm of Chartered Accountants in
-              Vadodara, Gujarat — a single-window partner for assurance,
-              taxation, forensic and advisory needs, serving domestic and
-              international clients of every size.
+              <span className="tracking-[0.2em]">KAPS</span> &amp; Co. is an
+              established firm of Chartered Accountants with a deep, proven
+              practice — a single-window partner for assurance, taxation,
+              forensic and advisory needs, serving domestic and international
+              clients of every size.
             </motion.p>
 
             <motion.p

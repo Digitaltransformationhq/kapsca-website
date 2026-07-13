@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { animate, motion, useReducedMotion } from "motion/react";
 import { useConsultation } from "./consultation";
 import { useScrollNav } from "./scroll-nav";
-import { LottieEarth } from "./LottieEarth";
 
 const STATS = [
   { to: 11, suffix: "", pad: 0, label: "Service areas" },
@@ -71,88 +70,106 @@ export function Hero() {
       id="top"
       className="relative flex min-h-[100svh] flex-col pt-24 pb-6"
     >
+      {/* ---------- World map backdrop ---------- */}
+      <motion.div
+        aria-hidden
+        initial={reduce ? {} : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.6, delay: 0.1, ease }}
+        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+        style={{
+          // Fade the map out toward the edges so it never fights the copy.
+          maskImage:
+            "radial-gradient(120% 90% at 50% 45%, #000 35%, transparent 78%)",
+          WebkitMaskImage:
+            "radial-gradient(120% 90% at 50% 45%, #000 35%, transparent 78%)",
+        }}
+      >
+        {/* The SVG's ocean is transparent, so masking a flat colour with it
+            tints every landmass uniformly and drops the file's stray colours. */}
+        <div
+          className="absolute left-1/2 top-1/2 aspect-[2191/1135] w-[150%] -translate-x-1/2 -translate-y-1/2 bg-white/[0.07] lg:w-[115%]"
+          style={{
+            maskImage: "url('/world-map.svg')",
+            WebkitMaskImage: "url('/world-map.svg')",
+            maskSize: "contain",
+            WebkitMaskSize: "contain",
+            maskRepeat: "no-repeat",
+            WebkitMaskRepeat: "no-repeat",
+            maskPosition: "center",
+            WebkitMaskPosition: "center",
+          }}
+        />
+      </motion.div>
+
       {/* Main hero row — vertically centered in the space above the stats band */}
       <div className="container-kaps relative z-10 flex flex-1 flex-col justify-center">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
-          {/* ---------- Left column ---------- */}
-          <div className="max-w-xl lg:-mt-6">
-            {/* Headline */}
-            <motion.h1
-              {...rise(0.08)}
-              className="font-display text-[clamp(2.6rem,6vw,4.4rem)] font-800 leading-[1.02] tracking-[-0.02em] text-white text-balance"
-            >
-              Integrity beyond
-              <br />
-              the <span className="text-accent-400">numbers</span>.
-            </motion.h1>
-
-            {/* Subtext */}
-            <motion.p
-              {...rise(0.16)}
-              className="mt-6 max-w-lg text-lg leading-relaxed text-white/70"
-            >
-              A partner-led firm delivering assurance, taxation, forensic and
-              advisory services — a single-window professional partner for
-              businesses of every size.
-            </motion.p>
-
-            {/* CTAs */}
-            <motion.div
-              {...rise(0.24)}
-              className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
-            >
-              <button
-                onClick={openConsult}
-                className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent-500 px-6 py-3.5 text-base font-600 text-white shadow-[0_12px_30px_-14px_rgba(78,167,46,0.6)] transition-all hover:bg-accent-600 hover:shadow-[0_16px_36px_-14px_rgba(78,167,46,0.75)] sm:w-auto"
-              >
-                Book an Appointment
-                <svg
-                  viewBox="0 0 16 16"
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  fill="none"
-                >
-                  <path
-                    d="M3 8h9M8 4l4 4-4 4"
-                    stroke="currentColor"
-                    strokeWidth="1.7"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-              <button
-                onClick={() => go("services")}
-                className="group inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.03] px-6 py-3.5 text-base font-500 text-white/85 backdrop-blur transition-all hover:border-white/30 hover:bg-white/[0.07] hover:text-white sm:w-auto"
-              >
-                Explore our services
-                <svg
-                  viewBox="0 0 16 16"
-                  className="h-4 w-4 transition-transform group-hover:translate-y-0.5"
-                  fill="none"
-                >
-                  <path
-                    d="M8 3v9M4 8l4 4 4-4"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            </motion.div>
-          </div>
-
-          {/* ---------- Right column: Earth & Connections animation ---------- */}
-          <motion.div
-            initial={reduce ? {} : { opacity: 0, scale: 0.94, y: 12 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 1.1, delay: 0.2, ease }}
-            className="relative mx-auto w-full max-w-[560px] lg:mx-0"
+        <div className="max-w-2xl lg:-mt-6">
+          {/* Headline */}
+          <motion.h1
+            {...rise(0.08)}
+            className="font-display text-[clamp(2.6rem,6vw,4.4rem)] font-800 leading-[1.02] tracking-[-0.02em] text-white text-balance"
           >
-            <LottieEarth />
+            Integrity beyond
+            <br />
+            the <span className="text-accent-400">numbers</span>.
+          </motion.h1>
+
+          {/* Subtext */}
+          <motion.p
+            {...rise(0.16)}
+            className="mt-6 max-w-lg text-lg leading-relaxed text-white/70"
+          >
+            A partner-led firm delivering assurance, taxation, forensic and
+            advisory services — a single-window professional partner for
+            businesses of every size.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            {...rise(0.24)}
+            className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
+          >
+            <button
+              onClick={openConsult}
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent-500 px-6 py-3.5 text-base font-600 text-white shadow-[0_12px_30px_-14px_rgba(78,167,46,0.6)] transition-all hover:bg-accent-600 hover:shadow-[0_16px_36px_-14px_rgba(78,167,46,0.75)] sm:w-auto"
+            >
+              Book an Appointment
+              <svg
+                viewBox="0 0 16 16"
+                className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                fill="none"
+              >
+                <path
+                  d="M3 8h9M8 4l4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={() => go("services")}
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.03] px-6 py-3.5 text-base font-500 text-white/85 backdrop-blur transition-all hover:border-white/30 hover:bg-white/[0.07] hover:text-white sm:w-auto"
+            >
+              Explore our services
+              <svg
+                viewBox="0 0 16 16"
+                className="h-4 w-4 transition-transform group-hover:translate-y-0.5"
+                fill="none"
+              >
+                <path
+                  d="M8 3v9M4 8l4 4 4-4"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
           </motion.div>
         </div>
-
       </div>
 
       {/* ---------- Stats band (sits at the bottom, within the first screen) ---------- */}

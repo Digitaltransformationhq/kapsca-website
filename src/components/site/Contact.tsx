@@ -20,6 +20,7 @@ const FOOTER_LINKS = [
   { label: "About", id: "about" },
   { label: "Services", id: "services" },
   { label: "Team", id: "team" },
+  { label: "Careers", id: "careers" },
   { label: "Contact", id: "contact" },
 ];
 
@@ -90,14 +91,14 @@ export function Contact() {
               </a>
 
               <a
-                href="tel:+919725339233"
+                href="tel:+917863042436"
                 className="group flex items-center gap-4 border-t border-white/10 py-4"
               >
                 <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 text-accent-400" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg>
                 <span className="text-[1.05rem] font-500 text-white/85 transition-colors group-hover:text-white">
-                  +91 97253 39233
+                  +91 78630 42436
                 </span>
                 <svg viewBox="0 0 16 16" className="ml-auto h-4 w-4 text-white/25 transition-all group-hover:translate-x-0.5 group-hover:text-accent-400" fill="none">
                   <path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -129,10 +130,7 @@ export function Contact() {
 
             {/* Address + directions */}
             <div className="p-6 sm:p-7">
-              <p className="text-[11px] font-600 uppercase tracking-[0.2em] text-accent-400">
-                Head Office · Vadodara
-              </p>
-              <p className="mt-2.5 text-[1.02rem] leading-relaxed text-white">
+              <p className="text-[1.02rem] leading-relaxed text-white">
                 323–324, Trivia Complex, Race Course Road,
                 <br className="hidden sm:block" /> Vadodara – 390 007, Gujarat,
                 India
@@ -165,7 +163,7 @@ export function Contact() {
               <Logo />
               <p className="mt-4 text-sm leading-relaxed text-white/45">
                 Integrity beyond numbers — a partner-led firm of Chartered
-                Accountants in Vadodara, Gujarat.
+                Accountants.
               </p>
             </div>
             <nav className="grid grid-cols-2 gap-x-20 gap-y-4 sm:mr-12 lg:mr-24">
@@ -182,8 +180,10 @@ export function Contact() {
           </div>
 
           <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between">
-            <p>© 2026 KAPS &amp; Co. · Crafted in Vadodara · All rights reserved.</p>
-            <p>Vadodara · Gujarat · India</p>
+            <p>
+              © 2026 <span className="tracking-[0.2em]">KAPS</span> &amp; Co. ·
+              Crafted in Vadodara · All rights reserved.
+            </p>
           </div>
         </div>
 

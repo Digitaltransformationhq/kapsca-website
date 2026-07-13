@@ -51,6 +51,38 @@ const TEAM = [
   },
 ];
 
+// Associates / team members below the partners. TODO: copy to be supplied.
+const ASSOCIATES = [
+  {
+    initials: "KS",
+    name: "CA. Kush Shah",
+    tag: "—",
+    desc: "Profile coming soon.",
+    photo: "/team/kush-shah.jpeg",
+  },
+  {
+    initials: "KP",
+    name: "Karishma Pitroda, MBA",
+    tag: "—",
+    desc: "Profile coming soon.",
+    photo: "/team/karishma-pitroda.jpeg",
+  },
+  {
+    initials: "AR",
+    name: "CA. Ankit Rudani",
+    tag: "—",
+    desc: "Profile coming soon.",
+    photo: "/team/ankit-rudani.jpeg",
+  },
+  {
+    initials: "JP",
+    name: "Jay Pitroda",
+    tag: "—",
+    desc: "Profile coming soon.",
+    photo: "/team/jay-pitroda.jpeg",
+  },
+];
+
 type Member = (typeof TEAM)[number];
 
 // Per-photo crop tuning (object-position) so faces sit centred in the card.
@@ -167,9 +199,10 @@ export function Team() {
             transition={{ duration: 0.8, delay: 0.08, ease }}
             className="max-w-sm text-[0.98rem] leading-relaxed text-navy-500 lg:pb-1"
           >
-            KAPS &amp; Co. is a partnership of six Chartered Accountants, each
-            leading a practice vertical — so every engagement is supervised,
-            start to finish, by a partner.
+            <span className="tracking-[0.2em]">KAPS</span> &amp; Co. is a
+            partnership of six Chartered Accountants, each leading a practice
+            vertical — so every engagement is supervised, start to finish, by a
+            partner.
           </motion.p>
         </div>
 
@@ -178,6 +211,33 @@ export function Team() {
           {TEAM.map((m, i) => (
             <TeamCard key={m.initials} m={m} i={i} />
           ))}
+        </div>
+
+        {/* ---------- Associates ---------- */}
+        <div className="mt-12 border-t border-navy-700/10 pt-9 sm:mt-14 sm:pt-10">
+          <div className="max-w-2xl">
+            <div className="mb-5 inline-flex items-center gap-3">
+              <span className="h-px w-8 bg-accent-500" />
+              <span className="text-xs font-600 uppercase tracking-[0.26em] text-accent-600">
+                Leadership Team
+              </span>
+            </div>
+            <motion.h2
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.8, ease }}
+              className="font-display text-[clamp(1.9rem,3.6vw,2.9rem)] font-700 leading-[1.12] tracking-tight text-navy-700 text-balance"
+            >
+              The people behind every engagement.
+            </motion.h2>
+          </div>
+
+          <div className="mx-auto mt-12 grid grid-cols-1 justify-items-center gap-14 sm:grid-cols-2 lg:grid-cols-4">
+            {ASSOCIATES.map((m, i) => (
+              <TeamCard key={m.initials} m={m} i={i} />
+            ))}
+          </div>
         </div>
       </div>
     </section>

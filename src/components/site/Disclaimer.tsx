@@ -68,23 +68,27 @@ export function Disclaimer() {
                   form or manner. By accessing this website,{" "}
                   <span className="font-600 text-navy-700">www.kapsca.in</span>,
                   you acknowledge and confirm that you are seeking information
-                  relating to KAPS &amp; Co. of your own accord and that there has
-                  been no form of solicitation, advertisement or inducement by
-                  KAPS &amp; Co. or its partners or employees.
+                  relating to{" "}
+                  <span className="tracking-[0.2em]">KAPS</span> &amp; Co. of
+                  your own accord and that there has been no form of
+                  solicitation, advertisement or inducement by{" "}
+                  <span className="tracking-[0.2em]">KAPS</span> &amp; Co. or its
+                  partners or employees.
                 </p>
                 <p>
                   The contents of this website are for informational purposes only
                   and should not be interpreted as soliciting or advertising. No
                   information provided on this website should be used or construed
-                  as a substitute for professional advice. KAPS &amp; Co. shall
+                  as a substitute for professional advice.{" "}
+                  <span className="tracking-[0.2em]">KAPS</span> &amp; Co. shall
                   not be liable for consequences of any action taken by relying on
                   the information provided on this website. It is recommended that
                   the readers should take professional advice before acting on the
                   same.
                 </p>
                 <p>
-                  The contents of this website are the intellectual property of
-                  KAPS &amp; Co.
+                  The contents of this website are the intellectual property of{" "}
+                  <span className="tracking-[0.2em]">KAPS</span> &amp; Co.
                 </p>
               </div>
             </div>

@@ -172,19 +172,20 @@ export function ConsultationModal({
                   Request received
                 </h3>
                 <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-navy-500">
-                  Thank you — a partner from KAPS &amp; Co. will get back to you
-                  shortly. Prefer to talk now? Give us a call.
+                  Thank you — a partner from{" "}
+                  <span className="tracking-[0.2em]">KAPS</span> &amp; Co. will
+                  get back to you shortly. Prefer to talk now? Give us a call.
                 </p>
 
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
                   <a
-                    href="tel:+919725339233"
+                    href="tel:+917863042436"
                     className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent-500 px-6 py-3 text-sm font-600 text-white transition-colors hover:bg-accent-600"
                   >
                     <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
                       <path d="M6.5 3.5a1 1 0 0 1 1 .7l1 3a1 1 0 0 1-.3 1.05L7 9.5a12 12 0 0 0 5.5 5.5l1.25-1.2a1 1 0 0 1 1.05-.24l3 1a1 1 0 0 1 .7 1v3a1 1 0 0 1-1 1A15 15 0 0 1 3.5 5.5a1 1 0 0 1 1-1h2Z" />
                     </svg>
-                    Call +91 97253 39233
+                    Call +91 78630 42436
                   </a>
                   <button
                     onClick={onClose}

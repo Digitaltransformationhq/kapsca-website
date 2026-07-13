@@ -13,7 +13,7 @@ type LogoProps = {
 export function Logo({ className = "", tone = "light" }: LogoProps) {
   const onDark = tone === "light";
   const primary = onDark ? "#ffffff" : "#1b365d";
-  const sub = onDark ? "rgba(255,255,255,0.55)" : "rgba(32,42,56,0.55)";
+  const sub = onDark ? "rgba(255,255,255,0.6)" : "#5b6472";
 
   const mark = (
     <Image
@@ -21,13 +21,13 @@ export function Logo({ className = "", tone = "light" }: LogoProps) {
       alt="KAPS & Co. — Chartered Accountants (CA India)"
       width={1081}
       height={804}
-      className="h-9 w-auto object-contain"
+      className="h-10 w-auto object-contain"
       priority
     />
   );
 
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className}`}>
+    <span className={`inline-flex items-center gap-3 ${className}`}>
       {/* On dark backgrounds, a white badge keeps the navy CA-India mark legible;
           on light backgrounds the mark shows directly. */}
       {onDark ? (
@@ -37,18 +37,29 @@ export function Logo({ className = "", tone = "light" }: LogoProps) {
       ) : (
         mark
       )}
-      <span className="flex flex-col items-start text-left leading-none">
-        <span
-          className="font-jetbrains text-[1.02rem] font-700 tracking-[0.14em]"
-          style={{ color: primary }}
-        >
-          KAPS &amp; Co.
+      {/* Wordmark scaled to the CA mark, with the green divider line (as in the
+          official logo) between the name and the "Chartered Accountants" line. */}
+      <span className="flex flex-col items-start leading-none">
+        {/* Name + green line share a width fitted to "KAPS & Co." so the line
+            ends exactly under the "Co." full stop. */}
+        <span className="flex w-fit flex-col items-stretch">
+          <span
+            className="-mr-[0.28em] font-jetbrains text-[1.4rem] font-700 leading-none tracking-[0.06em] whitespace-nowrap"
+            style={{ color: primary }}
+          >
+            KAPS&nbsp;&amp;&nbsp;Co.
+          </span>
+          {/* Green line — matches the reference logo, ending at the "Co." full stop */}
+          <span
+            aria-hidden
+            className="my-[3px] h-[2px] w-full rounded-full bg-[linear-gradient(to_right,transparent_0%,transparent_30%,var(--color-accent-500)_76%,var(--color-accent-400)_100%)]"
+          />
         </span>
         <span
-          className="mt-[4px] font-jetbrains text-[0.5rem] font-500 uppercase tracking-[0.2em]"
+          className="font-jetbrains text-[0.55rem] font-500 uppercase tracking-[0.22em]"
           style={{ color: sub }}
         >
-          Chartered Accountants
+          Chartered&nbsp;Accountants
         </span>
       </span>
     </span>

@@ -20,6 +20,7 @@ import { Hero } from "./Hero";
 import { About } from "./About";
 import { Services } from "./Services";
 import { Team } from "./Team";
+import { Careers } from "./Careers";
 import { Contact } from "./Contact";
 
 /** Rounded-corner radius (max, at sm) + margin. A non-terminal section's box
@@ -45,11 +46,12 @@ const SECTIONS: { id: string; el: ReactNode; bg: string }[] = [
   {
     id: "top",
     el: <Hero />,
-    bg: "grain bg-[linear-gradient(135deg,#0d2138_0%,#123a44_50%,#1d5e3e_100%)]",
+    bg: "grain bg-[linear-gradient(135deg,#0f2039_0%,#0d1d35_50%,#0a1728_100%)]",
   },
   { id: "about", el: <About />, bg: "bg-cloud" },
   { id: "services", el: <Services />, bg: "bg-navy-900" },
   { id: "team", el: <Team />, bg: "bg-cloud" },
+  { id: "careers", el: <Careers />, bg: "bg-navy-900" },
   { id: "contact", el: <Contact />, bg: "bg-navy-950" },
 ];
 

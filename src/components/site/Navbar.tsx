@@ -11,6 +11,7 @@ const LINKS = [
   { label: "About", id: "about" },
   { label: "Services", id: "services" },
   { label: "Team", id: "team" },
+  { label: "Careers", id: "careers" },
   { label: "Contact", id: "contact" },
 ];
 
@@ -164,11 +165,11 @@ export function Navbar() {
                 ))}
                 <li className="mt-1 grid grid-cols-1 gap-2 px-1 pt-1">
                   <a
-                    href="tel:+919725339233"
+                    href="tel:+917863042436"
                     onClick={() => setOpen(false)}
                     className="rounded-full border border-navy-900/15 px-5 py-3 text-center text-sm font-500 text-navy-600"
                   >
-                    +91 97253 39233
+                    +91 78630 42436
                   </a>
                   <button
                     onClick={() => {
