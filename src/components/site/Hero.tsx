@@ -68,7 +68,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[100svh] flex-col pt-24 pb-6"
+      className="relative flex min-h-[100svh] flex-col pt-28 pb-6"
     >
       {/* ---------- World map backdrop ---------- */}
       <motion.div
@@ -105,10 +105,13 @@ export function Hero() {
       {/* Main hero row — vertically centered in the space above the stats band */}
       <div className="container-kaps relative z-10 flex flex-1 flex-col justify-center">
         <div className="max-w-2xl lg:-mt-6">
-          {/* Headline */}
+          {/* Headline. Type and spacing below are capped by viewport HEIGHT as
+              well as width — with a width-only clamp, a short laptop screen left
+              the hero taller than the viewport and the headline rode up under
+              the navbar. */}
           <motion.h1
             {...rise(0.08)}
-            className="font-display text-[clamp(2.6rem,6vw,4.4rem)] font-800 leading-[1.02] tracking-[-0.02em] text-white text-balance"
+            className="font-display text-[clamp(2.2rem,min(6vw,8.4vh),4.4rem)] font-800 leading-[1.02] tracking-[-0.02em] text-white text-balance"
           >
             Integrity beyond
             <br />
@@ -118,7 +121,7 @@ export function Hero() {
           {/* Subtext */}
           <motion.p
             {...rise(0.16)}
-            className="mt-6 max-w-lg text-lg leading-relaxed text-white/70"
+            className="mt-[clamp(1rem,2.6vh,1.5rem)] max-w-lg text-[clamp(1rem,2.1vh,1.125rem)] leading-relaxed text-white/70"
           >
             A partner-led firm delivering assurance, taxation, forensic and
             advisory services — a single-window professional partner for
@@ -128,7 +131,7 @@ export function Hero() {
           {/* CTAs */}
           <motion.div
             {...rise(0.24)}
-            className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
+            className="mt-[clamp(1.25rem,3.6vh,2.25rem)] flex flex-col gap-3 sm:flex-row sm:items-center"
           >
             <button
               onClick={openConsult}
@@ -173,12 +176,12 @@ export function Hero() {
       </div>
 
       {/* ---------- Stats band (sits at the bottom, within the first screen) ---------- */}
-      <div className="container-kaps relative z-10 mt-8">
+      <div className="container-kaps relative z-10 mt-[clamp(1.25rem,3vh,2rem)]">
         <motion.div
           initial={reduce ? {} : { opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.55, ease }}
-          className="rounded-[26px] border border-white/60 bg-white p-6 shadow-[0_40px_90px_-45px_rgba(10,23,40,0.7)] sm:p-8"
+          className="rounded-[26px] border border-white/60 bg-white p-[clamp(1rem,2.6vh,2rem)] shadow-[0_40px_90px_-45px_rgba(10,23,40,0.7)]"
         >
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-8">
             {STATS.map((s, i) => (
@@ -191,7 +194,7 @@ export function Hero() {
               >
                 {/* Circle accent (reference motif) */}
                 <span className="mx-auto mb-2.5 flex h-2.5 w-2.5 rounded-full bg-accent-500 sm:mx-0" />
-                <p className="font-display text-4xl font-800 tracking-tight text-navy-700 sm:text-5xl">
+                <p className="font-display text-[clamp(1.9rem,4.4vh,3rem)] font-800 tracking-tight text-navy-700">
                   <Counter
                     to={s.to}
                     suffix={s.suffix}

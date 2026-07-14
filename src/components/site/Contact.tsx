@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "motion/react";
 import { Logo } from "./Logo";
 import { useScrollNav } from "./scroll-nav";
@@ -12,9 +13,43 @@ const rise = {
   viewport: { once: true, margin: "-80px" },
 };
 
-const ADDRESS = "Trivia Complex, Race Course Road, Vadodara, Gujarat 390007";
-const MAP_EMBED = `https://maps.google.com/maps?q=${encodeURIComponent(ADDRESS)}&z=15&output=embed`;
-const MAP_DIRECTIONS = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(ADDRESS)}`;
+/** Offices, in order. `query` is what Google Maps is asked to find — keep it a
+ *  clean, geocodable string; `lines` is what we show. */
+const OFFICES = [
+  {
+    tab: "Race Course",
+    city: "Vadodara — Race Course",
+    query: "Trivia Complex, Race Course Road, Vadodara, Gujarat 390007",
+    lines: [
+      "323–324, Trivia Complex, Race Course Road,",
+      "Vadodara – 390 007, Gujarat",
+    ],
+  },
+  {
+    tab: "Sayajigunj",
+    city: "Vadodara — Sayajigunj",
+    query: "Darshanam Trade Center 3, Sayajigunj, Vadodara, Gujarat 390020",
+    lines: [
+      "SF02, Darshanam Trade Center 3, B/h Sayaji Hotel,",
+      "Sayajigunj, Vadodara – 390 020, Gujarat",
+    ],
+  },
+  {
+    tab: "Gandhidham",
+    city: "Gandhidham",
+    query:
+      "Madhav Darshan Complex, Opp Gandhidham Post Office, Gandhidham, Kutch, Gujarat 370210",
+    lines: [
+      "Office No. 19, Second Floor, Madhav Darshan Complex,",
+      "Opp. Gandhidham Post Office, Gandhidham, Kutch – 370 210",
+    ],
+  },
+];
+
+const mapEmbed = (q: string) =>
+  `https://maps.google.com/maps?q=${encodeURIComponent(q)}&z=15&output=embed`;
+const mapDirections = (q: string) =>
+  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}`;
 
 const FOOTER_LINKS = [
   { label: "About", id: "about" },
@@ -26,6 +61,8 @@ const FOOTER_LINKS = [
 
 export function Contact() {
   const { go } = useScrollNav();
+  const [office, setOffice] = useState(0);
+  const current = OFFICES[office];
 
   return (
     <section
@@ -37,8 +74,8 @@ export function Contact() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_80%_at_85%_0%,rgba(78,167,46,0.12),transparent_60%)]" />
 
       <div className="container-kaps relative flex flex-1 flex-col justify-center pt-40 pb-16 sm:pt-48">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-          {/* ---------- Left: message + actions ---------- */}
+        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
+          {/* ---------- Left: message ---------- */}
           <div className="flex flex-col justify-center">
             <motion.div
               {...rise}
@@ -108,7 +145,7 @@ export function Contact() {
 
           </div>
 
-          {/* ---------- Right: office location + map ---------- */}
+          {/* ---------- Right: office card — tabs switch the map + address ---------- */}
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -116,11 +153,35 @@ export function Contact() {
             transition={{ duration: 0.85, delay: 0.1, ease }}
             className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]"
           >
-            {/* Map */}
-            <div className="relative aspect-[16/11] w-full bg-navy-900">
+            <div
+              role="tablist"
+              aria-label="Our offices"
+              className="flex gap-1 border-b border-white/10 p-2"
+            >
+              {OFFICES.map((o, i) => (
+                <button
+                  key={o.city}
+                  role="tab"
+                  aria-selected={i === office}
+                  onClick={() => setOffice(i)}
+                  className={`flex-1 rounded-lg px-3 py-2 text-[13px] font-600 transition-colors ${
+                    i === office
+                      ? "bg-white/10 text-white"
+                      : "text-white/45 hover:bg-white/[0.04] hover:text-white/75"
+                  }`}
+                >
+                  {o.tab}
+                </button>
+              ))}
+            </div>
+
+            {/* Map — capped by viewport height too, so the whole card stays
+                visible at a glance on a short laptop screen. */}
+            <div className="relative h-[clamp(15rem,36vh,23rem)] w-full bg-navy-900">
               <iframe
-                title="KAPS & Co. — Head Office, Vadodara"
-                src={MAP_EMBED}
+                key={current.city}
+                title={`KAPS & Co. — ${current.city} office`}
+                src={mapEmbed(current.query)}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 className="absolute inset-0 h-full w-full [filter:grayscale(0.25)_contrast(0.95)_brightness(0.95)]"
@@ -128,26 +189,43 @@ export function Contact() {
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-navy-950/70 to-transparent" />
             </div>
 
-            {/* Address + directions */}
-            <div className="p-6 sm:p-7">
-              <p className="text-[1.02rem] leading-relaxed text-white">
-                323–324, Trivia Complex, Race Course Road,
-                <br className="hidden sm:block" /> Vadodara – 390 007, Gujarat,
-                India
+            {/* Address + directions — side by side, so the card stays short */}
+            <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+              <p className="min-h-[2.8em] text-[0.95rem] leading-relaxed text-white">
+                {current.lines[0]}
+                <br className="hidden sm:block" /> {current.lines[1]}
               </p>
               <a
-                href={MAP_DIRECTIONS}
+                href={mapDirections(current.query)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group mt-5 inline-flex items-center gap-2 rounded-xl bg-white/10 px-5 py-3 text-sm font-600 text-white transition-colors hover:bg-white/[0.16]"
+                className="group inline-flex shrink-0 items-center gap-2 self-start rounded-xl bg-white/10 px-4 py-2.5 text-[13px] font-600 text-white transition-colors hover:bg-white/[0.16] sm:self-auto"
               >
-                <svg viewBox="0 0 24 24" className="h-4 w-4 text-accent-400" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4 text-accent-400"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z" />
                   <circle cx="12" cy="11" r="2.2" />
                 </svg>
                 Get Directions
-                <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" fill="none">
-                  <path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                <svg
+                  viewBox="0 0 16 16"
+                  className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                  fill="none"
+                >
+                  <path
+                    d="M3 8h9M8 4l4 4-4 4"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </a>
             </div>
