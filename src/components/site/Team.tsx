@@ -69,7 +69,7 @@ const ASSOCIATES = [
   },
   {
     initials: "AR",
-    name: "CA. Ankit Rudani",
+    name: "Ankit Rudani",
     tag: "—",
     desc: "Profile coming soon.",
     photo: "/team/ankit-rudani.jpeg",
