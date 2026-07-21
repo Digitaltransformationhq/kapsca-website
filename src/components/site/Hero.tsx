@@ -8,7 +8,7 @@ import { useScrollNav } from "./scroll-nav";
 const STATS = [
   { to: 11, suffix: "", pad: 0, label: "Service areas" },
   { to: 6, suffix: "", pad: 2, label: "Partner-led verticals" },
-  { to: 12, suffix: "+", pad: 0, label: "Years of practice" },
+  { to: 5, suffix: "+", pad: 0, label: "Years of practice" },
   { to: 26, suffix: "", pad: 0, label: "States GST footprint" },
 ];
 
