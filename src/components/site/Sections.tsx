@@ -39,6 +39,14 @@ const nonTerminalBox = (content: number, V: number) =>
  *  still easing. Higher stiffness + lighter mass = less lag across every section. */
 const SMOOTH = { stiffness: 260, damping: 38, mass: 0.45, restDelta: 0.5 };
 
+/** Px of lift per px of scroll during the reveal. The hero used to get this for
+ *  free — a CSS bug left its layer in normal flow, so it moved natively AND by
+ *  transform, clearing the screen in half the scroll of every other section.
+ *  That double pace is the handover feel worth keeping, so it is now explicit
+ *  and applies to all of them. Content taller than the viewport still scrolls
+ *  1:1 first; only the curtain runs at this speed. */
+const CURTAIN_SPEED = 2;
+
 const useIso = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /** Ordered stack of sections. Each earlier one lifts to reveal the next. */
@@ -46,20 +54,39 @@ const SECTIONS: { id: string; el: ReactNode; bg: string }[] = [
   {
     id: "top",
     el: <Hero />,
-    bg: "grain bg-[linear-gradient(135deg,#0f2039_0%,#0d1d35_50%,#0a1728_100%)]",
+    // Must match the section's OWN background. A layer's box runs ~44px taller
+    // than its content to keep the rounded corners off screen, and that strip
+    // paints in the layer colour — so a navy gradient here (invisible behind
+    // the white hero) surfaced as a stray dark line under the hero as it lifted.
+    bg: "grain bg-white",
   },
-  { id: "about", el: <About />, bg: "bg-cloud" },
-  { id: "services", el: <Services />, bg: "bg-navy-900" },
-  { id: "team", el: <Team />, bg: "bg-cloud" },
-  { id: "careers", el: <Careers />, bg: "bg-navy-900" },
+  {
+    id: "about",
+    el: <About />,
+    // About's ambient washes live HERE, not inside the section, so they cover
+    // the layer's full box. Painted inside they stopped at the section's edge
+    // and the ~44px corner strip below stayed flat navy — a visible line along
+    // the bottom as the section lifted. Any section with a non-flat background
+    // has to paint it on the layer for the same reason.
+    bg: "bg-navy-950 bg-[radial-gradient(65%_50%_at_12%_0%,rgba(78,167,46,0.12),transparent_62%),radial-gradient(55%_45%_at_100%_100%,rgba(47,80,124,0.3),transparent_65%),radial-gradient(38%_46%_at_86%_50%,rgba(78,167,46,0.11),transparent_68%)]",
+  },
+  { id: "services", el: <Services />, bg: "bg-white" },
+  { id: "team", el: <Team />, bg: "bg-navy-900" },
+  { id: "careers", el: <Careers />, bg: "bg-white" },
   { id: "contact", el: <Contact />, bg: "bg-navy-950" },
 ];
 
 type LayerProps = {
   index: number;
-  scrollY: MotionValue<number>;
+  /** one spring-smoothed scroll value shared by every layer */
+  smoothScrollY: MotionValue<number>;
   enterEnd: number;
-  liftDistance: number;
+  /** how far the layer travels to clear the screen */
+  travel: number;
+  /** travel spent scrolling content into view at 1:1 before the curtain */
+  read: number;
+  /** scroll the whole travel costs (read + curtain / CURTAIN_SPEED) */
+  budget: number;
   isTerminal: boolean;
   viewport: number;
   zIndex: number;
@@ -77,9 +104,11 @@ type LayerProps = {
  */
 function StackLayer({
   index,
-  scrollY,
+  smoothScrollY,
   enterEnd,
-  liftDistance,
+  travel,
+  read,
+  budget,
   isTerminal,
   viewport,
   zIndex,
@@ -106,11 +135,24 @@ function StackLayer({
     return () => ro.disconnect();
   }, [index, onMeasure]);
 
-  const dist = Math.max(1, liftDistance);
-  const yRaw = useTransform(scrollY, [enterEnd, enterEnd + dist], [0, -dist], {
-    clamp: true,
-  });
-  const y = useSpring(yRaw, SMOOTH);
+  // Two-phase: 1:1 while the section's own overflow scrolls past, then the
+  // curtain at CURTAIN_SPEED. Sections that fit the viewport have no read
+  // phase, so they map straight through and hand over in ~half a screen.
+  const dist = Math.max(1, travel);
+  const span = Math.max(1, budget);
+  const twoPhase = read > 0 && span > read;
+  // Reads the ALREADY-smoothed scroll, so the clamp is the last word: a layer
+  // that has finished lifting is pinned at -dist and cannot lag back into
+  // view. (Springing each layer's own y instead let a finished layer trail its
+  // target and show a sliver of the wrong section along the top edge.)
+  const y = useTransform(
+    smoothScrollY,
+    twoPhase
+      ? [enterEnd, enterEnd + read, enterEnd + span]
+      : [enterEnd, enterEnd + span],
+    twoPhase ? [0, -read, -dist] : [0, -dist],
+    { clamp: true },
+  );
 
   // Re-evaluate the active section on every smoothed frame (incl. spring settle).
   useMotionValueEvent(y, "change", onFrame);
@@ -147,6 +189,10 @@ export function Sections({ onActiveChange, bindGo }: Props) {
   const enterEndsRef = useRef<number[]>([]);
 
   const { scrollY } = useScroll();
+  // ONE spring for the whole stack. Every layer derives its position from this
+  // single value, so the layers are always mutually consistent — no layer can
+  // lag behind another and expose a seam between them.
+  const smoothScrollY = useSpring(scrollY, SMOOTH);
 
   useEffect(() => {
     const onResize = () => setVh(window.innerHeight);
@@ -171,19 +217,29 @@ export function Sections({ onActiveChange, bindGo }: Props) {
   const V = vh || 900;
   const N = SECTIONS.length;
 
-  // Per-section lift distance and stacked entry points. Mapped over SECTIONS
-  // (not `heights`) and guarded so a stale/short heights array never yields NaN.
-  const lifts = SECTIONS.map((_, i) => {
+  // Per-section travel, and the scroll each costs. Mapped over SECTIONS (not
+  // `heights`) and guarded so a stale/short heights array never yields NaN.
+  const travels = SECTIONS.map((_, i) => {
     const h = Number.isFinite(heights[i]) ? heights[i] : 0;
     // Non-terminal sections lift their full box height (fully off the top);
     // the terminal section just scrolls its content.
     return i < N - 1 ? nonTerminalBox(h, V) : Math.max(1, h - V);
   });
+  // Overflow past one viewport is read at 1:1; the rest is curtain. The last
+  // section has no curtain at all — it only scrolls its own content.
+  const reads = SECTIONS.map((_, i) =>
+    i < N - 1
+      ? Math.max(0, (Number.isFinite(heights[i]) ? heights[i] : 0) - V)
+      : 0,
+  );
+  const budgets = travels.map((t, i) =>
+    i < N - 1 ? reads[i] + (t - reads[i]) / CURTAIN_SPEED : t,
+  );
   const enterEnds: number[] = [];
   let acc = 0;
   for (let i = 0; i < N; i++) {
     enterEnds.push(acc);
-    acc += lifts[i];
+    acc += budgets[i];
   }
   const total = acc;
   enterEndsRef.current = enterEnds;
@@ -231,9 +287,11 @@ export function Sections({ onActiveChange, bindGo }: Props) {
         <StackLayer
           key={s.id}
           index={i}
-          scrollY={scrollY}
+          smoothScrollY={smoothScrollY}
           enterEnd={enterEnds[i]}
-          liftDistance={lifts[i]}
+          travel={travels[i]}
+          read={reads[i]}
+          budget={budgets[i]}
           isTerminal={i === N - 1}
           viewport={V}
           zIndex={N - i}

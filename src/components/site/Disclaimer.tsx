@@ -112,7 +112,7 @@ export function Disclaimer() {
                 type="button"
                 disabled={!agreed}
                 onClick={() => setOpen(false)}
-                className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-accent-500 px-7 py-3 text-base font-600 text-white shadow-[0_12px_30px_-14px_rgba(78,167,46,0.6)] transition-all hover:bg-accent-600 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none"
+                className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-navy-700 px-7 py-3 text-base font-600 text-white shadow-[0_12px_30px_-14px_rgba(27,54,93,0.6)] transition-all hover:bg-navy-800 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none"
               >
                 Proceed
                 <svg

@@ -5,17 +5,6 @@ import { motion } from "motion/react";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-const PRACTICE = [
-  "GST & Indirect Tax",
-  "Direct Taxation",
-  "Forensic Audit",
-  "Statutory & Internal Audit",
-  "Insolvency & Liquidation",
-  "Company Secretarial",
-  "Project Finance",
-  "Management Advisory",
-];
-
 const ICONS: Record<string, ReactNode> = {
   partner: (
     <>
@@ -45,6 +34,17 @@ const ICONS: Record<string, ReactNode> = {
   ),
 };
 
+const PILLARS: { label: string; body: string }[] = [
+  {
+    label: "Vision",
+    body: "To redefine professional services by becoming a globally respected firm that inspires trust, drives innovation and shapes sustainable business growth.",
+  },
+  {
+    label: "Mission",
+    body: "To provide integrated assurance, taxation, advisory and transformation services through exceptional people, advanced technology and deep industry expertise — delivering measurable value with integrity, independence and excellence.",
+  },
+];
+
 const WHY_US: { icon: string; title: string; desc: string }[] = [
   {
     icon: "partner",
@@ -64,7 +64,7 @@ const WHY_US: { icon: string; title: string; desc: string }[] = [
   {
     icon: "window",
     title: "A single window",
-    desc: "Assurance, tax, forensic and advisory — all under one roof.",
+    desc: "One Firm. Complete Business Solutions.",
   },
 ];
 
@@ -74,142 +74,131 @@ const rise = {
   viewport: { once: true, margin: "-80px" },
 };
 
+/**
+ * Editorial layout — no panels or boxes anywhere. Structure comes from
+ * hairline rules, an indexed label column and a shift in type scale, which is
+ * the same vocabulary the Services list and Careers rows already use.
+ */
 export function About() {
   return (
-    <section id="about" data-section="about" className="relative bg-cloud">
-      <div className="container-kaps pt-20 pb-6 sm:pt-28 sm:pb-8">
-        {/* ---------- Header ---------- */}
-        <motion.div
-          {...rise}
-          transition={{ duration: 0.7, ease }}
-          className="mb-5 inline-flex items-center gap-3"
-        >
-          <span className="h-px w-8 bg-accent-500" />
-          <span className="text-xs font-600 uppercase tracking-[0.26em] text-accent-600">
-            About the Firm
-          </span>
-        </motion.div>
+    // Sized to one screen, like Solutions: every measure below is capped by
+    // viewport HEIGHT as well as width, so the whole section clears a short
+    // laptop without scrolling.
+    <section
+      id="about"
+      data-section="about"
+      className="grain relative flex min-h-[100svh] flex-col justify-center overflow-hidden pt-24 pb-10 sm:pt-28"
+    >
+      {/* Ambient lighting (green wash top-left, navy bloom bottom-right, and a
+          green bloom behind the eagle) is painted by this section's LAYER in
+          Sections.tsx, not here — it has to cover the layer's full box or it
+          leaves a seam along the bottom edge as the section lifts. */}
 
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
-          {/* ---------- Left: narrative ---------- */}
-          <div className="lg:col-span-7">
-            <motion.h2
-              {...rise}
-              transition={{ duration: 0.8, delay: 0.04, ease }}
-              className="max-w-xl font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-700 leading-[1.12] tracking-tight text-navy-700 text-balance"
-            >
-              A partner-led practice, built on integrity.
-            </motion.h2>
+      {/* Eagle watermark — vigilance and focus, sat behind the copy on the
+          right. The wrapper carries a left-to-right gradient mask that dissolves
+          the bird before it reaches the text, the same masking idea the hero
+          uses on its world map. The artwork itself is drawn rather than used as
+          an alpha mask: its feather detail lives in the greys, not the alpha
+          channel, so masking a flat colour would flatten it to a silhouette.
+          Desaturating and lifting it instead keeps the linework and still hands
+          the palette back to the section. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 right-0 hidden w-[58%] lg:block"
+        style={{
+          maskImage: "linear-gradient(to right, transparent 0%, #000 30%)",
+          WebkitMaskImage: "linear-gradient(to right, transparent 0%, #000 30%)",
+        }}
+      >
+        <div
+          // Mirrored so the head and beak point back into the copy. The
+          // background sits left because the flip swaps the sides, landing the
+          // bird against the right edge of the screen.
+          className="absolute right-[-24%] top-1/2 h-[min(80vh,46rem)] w-full -translate-y-1/2 -scale-x-100 opacity-[0.14] [filter:brightness(1.7)_contrast(1.35)]"
+          style={{
+            // Duotone: the gradient sits above the artwork and blends in
+            // `color`, so the greys keep their luminance but take the brand's
+            // hue — green off the crest falling to navy through the breast.
+            // (No grayscale() in the filter any more; it would strip the tint.)
+            backgroundImage:
+              "linear-gradient(158deg, rgba(107,192,71,0.95) 0%, rgba(47,80,124,0.95) 58%, rgba(27,54,93,0.95) 100%), url('/eagle.png')",
+            backgroundBlendMode: "color",
+            backgroundSize: "100% 100%, contain",
+            backgroundPosition: "center, left",
+            backgroundRepeat: "no-repeat",
+            // The PNG carries an opaque grey plate rather than an alpha
+            // channel, so a radial fall-off centred on the head dissolves the
+            // rectangle and concentrates what's left on the eye and beak.
+            maskImage:
+              "radial-gradient(62% 62% at 41% 42%, #000 40%, transparent 86%)",
+            WebkitMaskImage:
+              "radial-gradient(62% 62% at 41% 42%, #000 40%, transparent 86%)",
+          }}
+        />
+      </div>
 
-            <motion.p
-              {...rise}
-              transition={{ duration: 0.8, delay: 0.1, ease }}
-              className="mt-6 max-w-xl text-[1.02rem] leading-relaxed text-navy-500"
-            >
-              <span className="tracking-[0.2em]">KAPS</span> &amp; Co. is an
-              established firm of Chartered Accountants with a deep, proven
-              practice — a single-window partner for assurance, taxation,
-              forensic and advisory needs, serving domestic and international
-              clients of every size.
-            </motion.p>
-
-            <motion.p
-              {...rise}
-              transition={{ duration: 0.8, delay: 0.16, ease }}
-              className="mt-4 max-w-xl text-[1.02rem] leading-relaxed text-navy-500"
-            >
-              Every engagement runs under direct partner supervision — the depth
-              of a large firm with the care and responsiveness of a boutique.
-            </motion.p>
-
-            {/* Practice areas */}
+      <div className="container-kaps relative z-10">
+        {/* ---------- Vision & Mission, as indexed statement rows ---------- */}
+        <div className="border-t border-white/10">
+          {PILLARS.map((p, i) => (
             <motion.div
+              key={p.label}
               {...rise}
-              transition={{ duration: 0.8, delay: 0.22, ease }}
-              className="mt-9"
+              transition={{ duration: 0.8, delay: i * 0.08, ease }}
+              className="group relative grid gap-3 border-b border-white/10 py-[clamp(1rem,3vh,2.25rem)] lg:grid-cols-[9rem_minmax(0,1fr)] lg:gap-8"
             >
-              <p className="mb-3 text-xs font-600 uppercase tracking-[0.2em] text-navy-400">
-                Practice areas
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {PRACTICE.map((p) => (
-                  <span
-                    key={p}
-                    className="rounded-full border border-navy-200/70 bg-white px-3.5 py-1.5 text-sm font-500 text-navy-600 transition-colors hover:border-accent-400 hover:text-navy-700"
-                  >
-                    {p}
-                  </span>
-                ))}
+              {/* the rule brightens to brand green as the row is read */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 bottom-[-1px] h-px origin-left scale-x-0 bg-accent-500 transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+              />
+
+              <div className="flex items-baseline lg:pt-2">
+                <h2 className="text-xs font-600 uppercase tracking-[0.26em] text-white/45 transition-colors duration-500 group-hover:text-white">
+                  {p.label}
+                </h2>
               </div>
+
+              <p className="max-w-3xl font-display text-[clamp(1.05rem,min(1.8vw,2.6vh),1.45rem)] font-600 leading-[1.55] tracking-tight text-white/60 transition-colors duration-500 group-hover:text-white/85 text-justify hyphens-none">
+                {p.body}
+              </p>
             </motion.div>
-
-            {/* Quote */}
-            <motion.blockquote
-              {...rise}
-              transition={{ duration: 0.8, delay: 0.28, ease }}
-              className="mt-10 flex items-center gap-4 border-l-2 border-accent-500 pl-5"
-            >
-              <p className="font-display text-lg font-600 italic tracking-tight text-navy-700">
-                &ldquo;Integrity beyond numbers.&rdquo;
-              </p>
-            </motion.blockquote>
-          </div>
-
-          {/* ---------- Right: credentials record ---------- */}
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.85, delay: 0.1, ease }}
-            className="lg:col-span-5 lg:self-start"
-          >
-            <div className="glow-border relative overflow-hidden rounded-2xl bg-navy-800 p-6 sm:p-7">
-              {/* soft corner light */}
-              <span className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-accent-500/10 blur-3xl" />
-
-              {/* Header */}
-              <div className="relative flex items-center gap-3">
-                <span className="h-px w-7 bg-accent-500" />
-                <h3 className="font-display text-lg font-700 leading-tight text-white">
-                  Why firms choose us
-                </h3>
-              </div>
-              <p className="relative mt-2 text-sm font-500 text-white/45">
-                The difference a partner-led firm makes.
-              </p>
-
-              {/* Pillars — bare icons, hairline-separated rows */}
-              <ul className="relative mt-3">
-                {WHY_US.map((w) => (
-                  <li
-                    key={w.title}
-                    className="group/w flex gap-4 border-t border-white/[0.07] py-3.5 first:border-t-0"
-                  >
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="mt-0.5 h-[26px] w-[26px] shrink-0 text-accent-400 transition-[transform,color,filter] duration-300 group-hover/w:-translate-y-0.5 group-hover/w:text-accent-300 group-hover/w:[filter:drop-shadow(0_3px_10px_rgba(78,167,46,0.55))]"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.4"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      {ICONS[w.icon]}
-                    </svg>
-                    <div>
-                      <p className="font-display text-[15px] font-700 tracking-tight text-white">
-                        {w.title}
-                      </p>
-                      <p className="mt-1 text-sm leading-relaxed text-white/55">
-                        {w.desc}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
+          ))}
         </div>
+
+        {/* ---------- Why firms choose us — four columns, hairline-divided ---------- */}
+        <div className="mt-[clamp(1.5rem,4.5vh,3.5rem)] grid gap-[clamp(1.25rem,3vh,2.5rem)] sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-white/10">
+          {WHY_US.map((w, i) => (
+            <motion.div
+              key={w.title}
+              {...rise}
+              transition={{ duration: 0.7, delay: 0.14 + i * 0.07, ease }}
+              className="group lg:px-8 lg:first:pl-0 lg:last:pr-0"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="h-[clamp(1.3rem,3vh,1.75rem)] w-[clamp(1.3rem,3vh,1.75rem)] text-accent-400 transition-[transform,color,filter] duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1 group-hover:text-accent-300 group-hover:[filter:drop-shadow(0_5px_14px_rgba(78,167,46,0.5))]"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                {ICONS[w.icon]}
+              </svg>
+
+              <h3 className="mt-[clamp(0.75rem,2vh,1.25rem)] font-display text-[clamp(0.95rem,1.9vh,1.05rem)] font-700 leading-tight tracking-tight text-white">
+                {w.title}
+              </h3>
+              {/* short accent rule that extends on hover */}
+              <span className="mt-2.5 block h-px w-6 bg-accent-500/70 transition-all duration-500 group-hover:w-12 group-hover:bg-accent-400" />
+              <p className="mt-2.5 text-[clamp(12px,1.6vh,13.5px)] leading-relaxed text-white/55">
+                {w.desc}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
       </div>
     </section>
   );

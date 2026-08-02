@@ -183,7 +183,7 @@ export function ApplyModal({
 
             <button
               onClick={openEmail}
-              className="group mt-7 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent-500 px-6 py-3.5 text-base font-600 text-white shadow-[0_12px_30px_-14px_rgba(78,167,46,0.6)] transition-all hover:bg-accent-600"
+              className="group mt-7 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-navy-700 px-6 py-3.5 text-base font-600 text-white shadow-[0_12px_30px_-14px_rgba(27,54,93,0.6)] transition-all hover:bg-navy-800"
             >
               Open email &amp; attach CV
               <svg

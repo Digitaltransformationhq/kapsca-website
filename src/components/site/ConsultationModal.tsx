@@ -180,7 +180,7 @@ export function ConsultationModal({
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
                   <a
                     href="tel:+917863042436"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent-500 px-6 py-3 text-sm font-600 text-white transition-colors hover:bg-accent-600"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-navy-700 px-6 py-3 text-sm font-600 text-white transition-colors hover:bg-navy-800"
                   >
                     <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
                       <path d="M6.5 3.5a1 1 0 0 1 1 .7l1 3a1 1 0 0 1-.3 1.05L7 9.5a12 12 0 0 0 5.5 5.5l1.25-1.2a1 1 0 0 1 1.05-.24l3 1a1 1 0 0 1 .7 1v3a1 1 0 0 1-1 1A15 15 0 0 1 3.5 5.5a1 1 0 0 1 1-1h2Z" />
@@ -274,7 +274,7 @@ export function ConsultationModal({
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent-500 px-6 py-3.5 text-base font-600 text-white shadow-[0_12px_30px_-14px_rgba(78,167,46,0.6)] transition-all hover:bg-accent-600 disabled:cursor-not-allowed disabled:opacity-70"
+                    className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-navy-700 px-6 py-3.5 text-base font-600 text-white shadow-[0_12px_30px_-14px_rgba(27,54,93,0.6)] transition-all hover:bg-navy-800 disabled:cursor-not-allowed disabled:opacity-70"
                   >
                     {status === "submitting" ? (
                       <>

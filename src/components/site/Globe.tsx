@@ -45,13 +45,22 @@ export function Globe() {
       height: width * 2,
       phi: phiRef.current,
       theta: 0.26,
-      dark: 1,
-      diffuse: 1.2,
-      mapSamples: 16000,
-      mapBrightness: 6,
-      baseColor: [0.2, 0.33, 0.5], // navy-blue continents (#345381)
-      markerColor: [0.31, 0.65, 0.18], // brand green (#4EA72E)
-      glowColor: [0.15, 0.42, 0.28], // green-teal atmosphere (#1D6B45)
+      // cobe tints the whole sphere with baseColor and only varies brightness:
+      // `dark: 1` lights the land dots over a dark ocean, `dark: 0` inverts it —
+      // lit ocean, dots subtracted out. We want the latter: white water, navy
+      // landmass. mapBrightness then controls how dark the continents sit.
+      dark: 0,
+      // Land is a dot lattice; it only reads as solid once the covering radius
+      // drops under the shader's fixed dot radius, i.e. well past ~75k samples.
+      mapSamples: 100000,
+      // With dark:0, land = baseColor × (1 − mapBrightness) and water = baseColor.
+      // The hero world map's grey (navy-900 at 12% over white ≈ #E2E4E7) sits at
+      // 0.22; nudged up so the continents read against the white water.
+      mapBrightness: 0.55,
+      diffuse: 0.4, // keeps the landmass an even grey rather than fading at the limb
+      baseColor: [1, 1, 1], // white water
+      markerColor: [0.31, 0.65, 0.18], // brand green — needs to read on white
+      glowColor: [0.3, 0.38, 0.5], // soft blue-white atmosphere
       markers: MARKERS,
       onRender: (state) => {
         if (pointerInteracting.current === null && !reduced) {
@@ -63,8 +72,11 @@ export function Globe() {
       },
     });
 
+    // Settles at 35% — the globe is a backdrop, not a focal point. (cobe's own
+    // `opacity` option blends the far hemisphere through instead of fading, so
+    // the alpha belongs on the canvas.)
     const fade = setTimeout(() => {
-      canvas.style.opacity = "1";
+      canvas.style.opacity = "0.35";
     }, 120);
 
     return () => {
@@ -77,7 +89,7 @@ export function Globe() {
   return (
     <div className="relative mx-auto aspect-square w-full max-w-[540px]">
       {/* ambient halo behind the globe */}
-      <div className="pointer-events-none absolute inset-6 rounded-full bg-accent-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute inset-6 rounded-full bg-white/[0.07] blur-3xl" />
       <canvas
         ref={canvasRef}
         onPointerDown={(e) => {

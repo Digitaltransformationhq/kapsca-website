@@ -1,5 +1,8 @@
 import Image from "next/image";
 
+/** Split so each glyph can be spaced out to fill the wordmark's exact width. */
+const SUBTITLE = Array.from("CHARTERED ACCOUNTANTS");
+
 type LogoProps = {
   className?: string;
   /** Text color context: "light" for dark backgrounds, "dark" for light backgrounds */
@@ -21,7 +24,7 @@ export function Logo({ className = "", tone = "light" }: LogoProps) {
       alt="KAPS & Co. — Chartered Accountants (CA India)"
       width={1081}
       height={804}
-      className="h-10 w-auto object-contain"
+      className="h-11 w-auto object-contain"
       priority
     />
   );
@@ -43,23 +46,49 @@ export function Logo({ className = "", tone = "light" }: LogoProps) {
         {/* Name + green line share a width fitted to "KAPS & Co." so the line
             ends exactly under the "Co." full stop. */}
         <span className="flex w-fit flex-col items-stretch">
+          {/* "K A P S" is spaced letter by letter; "Co." stays tight. The
+              ampersand carries a small margin instead of space characters —
+              the wordmark is monospaced, so a real space would advance a full
+              glyph width and open a gap several times the letter-spacing.
+              "Co." runs at normal tracking; the full stop is pulled in on top
+              of that because a monospaced period sits centred in a full-width
+              cell, which reads as a space after the "o". */}
           <span
-            className="-mr-[0.28em] font-jetbrains text-[1.4rem] font-700 leading-none tracking-[0.06em] whitespace-nowrap"
+            className="font-jetbrains text-[1.7rem] font-800 leading-none tracking-[0.2em] whitespace-nowrap"
             style={{ color: primary }}
           >
-            KAPS&nbsp;&amp;&nbsp;Co.
+            KAPS<span className="mx-[0.08em]">&amp;</span>
+            <span className="tracking-normal">
+              Co<span className="-ml-[0.2em]">.</span>
+            </span>
           </span>
-          {/* Green line — matches the reference logo, ending at the "Co." full stop */}
+          {/* Green line — matches the reference logo, ending at the "Co." full
+              stop. The clip path narrows it to a point at the left, so the tail
+              thins out as it fades instead of stopping at full weight. */}
           <span
             aria-hidden
-            className="my-[3px] h-[2px] w-full rounded-full bg-[linear-gradient(to_right,transparent_0%,transparent_30%,var(--color-accent-500)_76%,var(--color-accent-400)_100%)]"
+            className="my-[3px] h-[1.5px] w-full bg-[linear-gradient(to_right,transparent_0%,transparent_14%,var(--color-accent-500)_72%,var(--color-accent-400)_100%)]"
+            style={{
+              clipPath: "polygon(0 50%, 58% 0, 100% 0, 100% 100%, 58% 100%)",
+            }}
           />
-        </span>
-        <span
-          className="font-jetbrains text-[0.55rem] font-500 uppercase tracking-[0.22em]"
-          style={{ color: sub }}
-        >
-          Chartered&nbsp;Accountants
+          {/* Justified to the wordmark: each glyph is its own flex item, so the
+              line starts under the "K" and ends under the full stop whatever the
+              wordmark's size or tracking. `w-0 min-w-full` keeps this line out of
+              the parent's fit-content width — otherwise it, not "K A P S & Co.",
+              would decide how wide the block is. */}
+          <span
+            aria-hidden
+            className="flex w-0 min-w-full justify-between font-jetbrains text-[0.6rem] font-500 uppercase"
+            style={{ color: sub }}
+          >
+            {SUBTITLE.map((char, i) => (
+              <span key={`${char}-${i}`} className={char === " " ? "w-[0.3em]" : ""}>
+                {char === " " ? "" : char}
+              </span>
+            ))}
+          </span>
+          <span className="sr-only">Chartered Accountants</span>
         </span>
       </span>
     </span>

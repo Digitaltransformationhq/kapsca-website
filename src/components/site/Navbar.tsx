@@ -9,7 +9,7 @@ import { useConsultation } from "./consultation";
 const LINKS = [
   { label: "Home", id: "top" },
   { label: "About", id: "about" },
-  { label: "Services", id: "services" },
+  { label: "Solutions", id: "services" },
   { label: "Team", id: "team" },
   { label: "Careers", id: "careers" },
   { label: "Contact", id: "contact" },
@@ -41,21 +41,25 @@ export function Navbar() {
       className="fixed inset-x-0 top-0 z-50 pt-3 sm:pt-4"
     >
       <div className="container-kaps">
-        {/* Floating glass bar */}
+        {/* Floating glass bar. Translucent enough for the hero map and the
+            sections below to bleed through, but never so thin that the navy
+            type loses contrast over the dark sections — hence the saturation
+            boost, which keeps the frost reading as glass rather than haze. */}
         <nav
-          className={`relative flex h-16 items-center justify-between rounded-2xl border border-navy-900/10 bg-white pl-4 pr-2 transition-all duration-500 sm:pl-5 ${
+          className={`relative flex h-20 items-center justify-between rounded-2xl border border-navy-900/10 bg-white/70 pl-5 pr-3 backdrop-blur-2xl backdrop-saturate-150 transition-all duration-500 sm:pl-6 ${
             scrolled
               ? "shadow-[0_16px_50px_-18px_rgba(10,23,40,0.35)]"
               : "shadow-[0_10px_40px_-22px_rgba(10,23,40,0.25)]"
           }`}
         >
-          {/* Subtle top glass highlight */}
-          <span className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
+          {/* Glass sheen — a light wash across the top edge */}
+          <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-white/50 to-transparent" />
+          <span className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent" />
 
           <button
             onClick={() => navigate("top")}
             aria-label="KAPS & Co. home"
-            className="flex shrink-0 items-center self-center"
+            className="relative flex shrink-0 items-center self-center"
           >
             <Logo tone="dark" />
           </button>
@@ -68,7 +72,7 @@ export function Navbar() {
                 <li key={l.id}>
                   <button
                     onClick={() => navigate(l.id)}
-                    className={`relative block rounded-full px-4 py-2 text-sm font-500 transition-colors duration-300 ${
+                    className={`relative block rounded-full px-5 py-2.5 text-[0.95rem] font-500 transition-colors duration-300 ${
                       isActive
                         ? "text-white"
                         : "text-navy-500 hover:text-navy-700"
@@ -77,7 +81,7 @@ export function Navbar() {
                     {isActive && (
                       <motion.span
                         layoutId="navActive"
-                        className="absolute inset-0 rounded-full bg-accent-500 shadow-[0_6px_18px_-6px_rgba(78,167,46,0.7)]"
+                        className="absolute inset-0 rounded-full bg-navy-700 shadow-[0_6px_18px_-6px_rgba(27,54,93,0.7)]"
                         transition={{ type: "spring", stiffness: 400, damping: 34 }}
                       />
                     )}
@@ -89,10 +93,10 @@ export function Navbar() {
           </ul>
 
           {/* Right cluster */}
-          <div className="flex items-center gap-2">
+          <div className="relative flex items-center gap-2">
             <button
               onClick={openConsult}
-              className="group hidden items-center gap-2 rounded-xl bg-accent-500 px-5 py-2.5 text-sm font-600 text-white shadow-[0_8px_22px_-12px_rgba(78,167,46,0.55)] transition-all hover:bg-accent-600 sm:inline-flex"
+              className="group hidden items-center gap-2 rounded-xl bg-navy-700 px-6 py-3 text-[0.95rem] font-600 text-white shadow-[0_8px_22px_-12px_rgba(27,54,93,0.55)] transition-all hover:bg-navy-800 sm:inline-flex"
             >
               Book an Appointment
               <svg
@@ -115,7 +119,7 @@ export function Navbar() {
               onClick={() => setOpen((v) => !v)}
               aria-label="Toggle menu"
               aria-expanded={open}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-navy-900/15 text-navy-700 lg:hidden"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-navy-900/15 text-navy-700 lg:hidden"
             >
               <div className="flex flex-col gap-1.5">
                 <span
@@ -146,7 +150,7 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -12, scale: 0.98 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-3 overflow-hidden rounded-3xl border border-navy-900/10 bg-white/95 p-3 shadow-[0_20px_60px_-22px_rgba(10,23,40,0.35)] backdrop-blur-2xl lg:hidden"
+              className="mt-3 overflow-hidden rounded-3xl border border-white/40 bg-white/80 p-3 shadow-[0_20px_60px_-22px_rgba(10,23,40,0.35)] backdrop-blur-2xl backdrop-saturate-150 lg:hidden"
             >
               <ul className="flex flex-col gap-1">
                 {LINKS.map((l) => (
@@ -155,7 +159,7 @@ export function Navbar() {
                       onClick={() => navigate(l.id)}
                       className={`block w-full rounded-2xl px-4 py-3 text-left text-base font-500 transition-colors ${
                         active === l.id
-                          ? "bg-accent-500 text-white"
+                          ? "bg-navy-700 text-white"
                           : "text-navy-600 hover:bg-navy-900/5 hover:text-navy-900"
                       }`}
                     >
@@ -176,7 +180,7 @@ export function Navbar() {
                       setOpen(false);
                       openConsult();
                     }}
-                    className="rounded-full bg-accent-500 px-5 py-3 text-center text-sm font-600 text-white"
+                    className="rounded-full bg-navy-700 px-5 py-3 text-center text-sm font-600 text-white"
                   >
                     Book an Appointment
                   </button>

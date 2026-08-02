@@ -75,10 +75,11 @@ body {
     padding-inline: 1.5rem;
   }
 
-  /* Subtle film-grain texture for premium depth */
-  .grain {
-    position: relative;
-  }
+  /* Subtle film-grain texture for premium depth.
+     NB: no `position` rule here. This file lands after Tailwind's utilities in
+     the same layer, so `.grain { position: relative }` silently beat `fixed`
+     on the scroll stack's hero layer and dropped it out of the stack. Callers
+     position themselves instead — the ::after anchors to whatever that is. */
   .grain::after {
     content: "";
     position: absolute;

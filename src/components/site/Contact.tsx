@@ -17,7 +17,8 @@ const rise = {
  *  clean, geocodable string; `lines` is what we show. */
 const OFFICES = [
   {
-    tab: "Race Course",
+    // "\n" renders as a break — the button is whitespace-pre-line.
+    tab: "Vadodara\n(Race Course)",
     city: "Vadodara — Race Course",
     query: "Trivia Complex, Race Course Road, Vadodara, Gujarat 390007",
     lines: [
@@ -26,7 +27,7 @@ const OFFICES = [
     ],
   },
   {
-    tab: "Sayajigunj",
+    tab: "Vadodara\n(Sayajigunj)",
     city: "Vadodara — Sayajigunj",
     query: "Darshanam Trade Center 3, Sayajigunj, Vadodara, Gujarat 390020",
     lines: [
@@ -35,7 +36,7 @@ const OFFICES = [
     ],
   },
   {
-    tab: "Gandhidham",
+    tab: "Kutch\n(Gandhidham)",
     city: "Gandhidham",
     query:
       "Madhav Darshan Complex, Opp Gandhidham Post Office, Gandhidham, Kutch, Gujarat 370210",
@@ -73,7 +74,7 @@ export function Contact() {
       {/* soft brand wash */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_80%_at_85%_0%,rgba(78,167,46,0.12),transparent_60%)]" />
 
-      <div className="container-kaps relative flex flex-1 flex-col justify-center pt-40 pb-16 sm:pt-48">
+      <div className="container-kaps relative flex flex-1 flex-col justify-center pt-32 pb-16 sm:pt-32">
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
           {/* ---------- Left: message ---------- */}
           <div className="flex flex-col justify-center">
@@ -164,7 +165,7 @@ export function Contact() {
                   role="tab"
                   aria-selected={i === office}
                   onClick={() => setOffice(i)}
-                  className={`flex-1 rounded-lg px-3 py-2 text-[13px] font-600 transition-colors ${
+                  className={`flex flex-1 items-center justify-center whitespace-pre-line rounded-lg px-3 py-2 text-center text-[13px] font-600 leading-snug transition-colors ${
                     i === office
                       ? "bg-white/10 text-white"
                       : "text-white/45 hover:bg-white/[0.04] hover:text-white/75"
@@ -189,8 +190,9 @@ export function Contact() {
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-navy-950/70 to-transparent" />
             </div>
 
-            {/* Address + directions — side by side, so the card stays short */}
-            <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+            {/* Address gets the full card width — sharing the row with the
+                button squeezed it to ~300px and forced a third line. */}
+            <div className="flex flex-col gap-4 p-5">
               <p className="min-h-[2.8em] text-[0.95rem] leading-relaxed text-white">
                 {current.lines[0]}
                 <br className="hidden sm:block" /> {current.lines[1]}
@@ -199,7 +201,7 @@ export function Contact() {
                 href={mapDirections(current.query)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex shrink-0 items-center gap-2 self-start rounded-xl bg-white/10 px-4 py-2.5 text-[13px] font-600 text-white transition-colors hover:bg-white/[0.16] sm:self-auto"
+                className="group inline-flex shrink-0 items-center gap-2 self-start rounded-xl bg-white/10 px-4 py-2.5 text-[13px] font-600 text-white transition-colors hover:bg-white/[0.16]"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -240,8 +242,7 @@ export function Contact() {
             <div className="max-w-xs">
               <Logo />
               <p className="mt-4 text-sm leading-relaxed text-white/45">
-                Integrity beyond numbers — a partner-led firm of Chartered
-                Accountants.
+                Integrity beyond numbers
               </p>
             </div>
             <nav className="grid grid-cols-2 gap-x-20 gap-y-4 sm:mr-12 lg:mr-24">
