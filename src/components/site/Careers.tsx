@@ -42,12 +42,12 @@ export function Careers() {
     <section
       id="careers"
       data-section="careers"
-      className="relative flex min-h-svh flex-col justify-center bg-white"
+      className="relative flex min-h-[118svh] flex-col justify-center bg-white"
     >
       {/* hairline separation from the section above */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-navy-900/10 to-transparent" />
 
-      <div className="container-kaps relative pt-24 pb-10 sm:pt-28">
+      <div className="container-kaps relative pt-28 pb-16 sm:pt-32 sm:pb-20">
         {/* Nest mark beside the tagline. Absolutely placed so it decorates the
             header band without adding height to the one-screen layout. The PNG
             has an opaque grey backdrop, so it is inverted, multiplied into the
@@ -81,7 +81,7 @@ export function Careers() {
         </div>
 
         {/* ---------- Body ---------- */}
-        <div className="mt-10 grid gap-x-16 gap-y-10 sm:mt-12 lg:grid-cols-12">
+        <div className="mt-14 grid gap-x-16 gap-y-10 sm:mt-16 lg:grid-cols-12">
           {/* Left: what to expect */}
           <motion.div
             {...rise}

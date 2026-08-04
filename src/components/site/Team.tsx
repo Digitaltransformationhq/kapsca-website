@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { Globe } from "./Globe";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -267,9 +266,9 @@ export function Team() {
 
       {/* ---------- Associates — its own full-height page ---------- */}
       <div className="container-kaps flex min-h-svh flex-col justify-center border-t border-white/10 py-16">
-        {/* Heading + globe sit left, the intro and four cards run along the right. */}
-        <div className="grid gap-10 xl:grid-cols-[1fr_auto] xl:items-start xl:gap-12">
-          <div className="max-w-lg">
+        {/* Header mirrors the Partners block above: heading left, intro right. */}
+        <div className="grid gap-6 lg:grid-cols-[auto_1fr] lg:items-end lg:gap-16">
+          <div className="max-w-2xl">
             <div className="mb-5 inline-flex items-center gap-3">
               <span className="h-px w-8 bg-accent-500" />
               <span className="text-xs font-600 uppercase tracking-[0.26em] text-accent-300">
@@ -281,44 +280,29 @@ export function Team() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.8, ease }}
-              className="font-display text-[clamp(1.6rem,2.3vw,2.1rem)] font-700 leading-[1.14] tracking-tight text-white text-balance"
+              className="font-display text-[clamp(1.9rem,3.6vw,2.9rem)] font-700 leading-[1.12] tracking-tight text-white text-balance"
             >
               Experienced Leaders. Shared Vision.
             </motion.h2>
-
-            {/* Fills the empty band under the heading on wide screens. */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.94 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 1, delay: 0.15, ease }}
-              className="mt-8 hidden w-full max-w-[320px] xl:block"
-            >
-              <Globe />
-            </motion.div>
           </div>
+          <motion.p
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, delay: 0.08, ease }}
+            className="max-w-lg text-justify hyphens-none text-[0.98rem] leading-relaxed text-white/70 lg:pb-1"
+          >
+            Our professionals bring together deep technical knowledge,
+            commercial insight and sector experience to help clients navigate
+            complexity, manage risk and achieve sustainable growth.
+          </motion.p>
+        </div>
 
-          {/* Right column: intro sits directly over the row of four, so the
-              cards ride up level with the globe instead of leaving a band. */}
-          <div className="flex flex-col gap-10 xl:relative xl:top-12">
-            <motion.p
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8, delay: 0.08, ease }}
-              className="max-w-lg text-justify hyphens-none text-[0.98rem] leading-relaxed text-white/70"
-            >
-              Our professionals bring together deep technical knowledge,
-              commercial insight and sector experience to help clients navigate
-              complexity, manage risk and achieve sustainable growth.
-            </motion.p>
-
-            <div className="grid grid-cols-2 justify-items-center gap-5 sm:grid-cols-4 xl:grid-cols-[repeat(4,190px)]">
-              {ASSOCIATES.map((m, i) => (
-                <TeamCard key={m.initials} m={m} i={i} compact />
-              ))}
-            </div>
-          </div>
+        {/* Four cards, centred as a block under the header. */}
+        <div className="mx-auto mt-12 grid grid-cols-2 justify-items-center gap-x-5 gap-y-10 sm:mt-14 sm:w-fit sm:grid-cols-[repeat(4,190px)] sm:gap-x-8">
+          {ASSOCIATES.map((m, i) => (
+            <TeamCard key={m.initials} m={m} i={i} compact />
+          ))}
         </div>
       </div>
     </section>

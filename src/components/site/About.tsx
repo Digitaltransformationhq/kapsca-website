@@ -87,12 +87,12 @@ export function About() {
     <section
       id="about"
       data-section="about"
-      className="grain relative flex min-h-[100svh] flex-col justify-center overflow-hidden pt-24 pb-10 sm:pt-28"
+      className="relative flex min-h-[118svh] flex-col justify-center overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20"
     >
-      {/* Ambient lighting (green wash top-left, navy bloom bottom-right, and a
-          green bloom behind the eagle) is painted by this section's LAYER in
-          Sections.tsx, not here — it has to cover the layer's full box or it
-          leaves a seam along the bottom edge as the section lifts. */}
+      {/* Ambient lighting (navy blooms top-left, bottom-right and behind the
+          eagle) is painted by this section's LAYER in Sections.tsx, not here —
+          it has to cover the layer's full box or it leaves a seam along the
+          bottom edge as the section lifts. */}
 
       {/* Eagle watermark — vigilance and focus, sat behind the copy on the
           right. The wrapper carries a left-to-right gradient mask that dissolves
@@ -117,11 +117,11 @@ export function About() {
           className="absolute right-[-24%] top-1/2 h-[min(80vh,46rem)] w-full -translate-y-1/2 -scale-x-100 opacity-[0.14] [filter:brightness(1.7)_contrast(1.35)]"
           style={{
             // Duotone: the gradient sits above the artwork and blends in
-            // `color`, so the greys keep their luminance but take the brand's
-            // hue — green off the crest falling to navy through the breast.
-            // (No grayscale() in the filter any more; it would strip the tint.)
+            // `color`, so the greys keep their luminance but take the section's
+            // hue — a light navy off the crest falling to deep navy through the
+            // breast. (No grayscale() in the filter; it would strip the tint.)
             backgroundImage:
-              "linear-gradient(158deg, rgba(107,192,71,0.95) 0%, rgba(47,80,124,0.95) 58%, rgba(27,54,93,0.95) 100%), url('/eagle.png')",
+              "linear-gradient(158deg, rgba(96,138,190,0.95) 0%, rgba(47,80,124,0.95) 58%, rgba(27,54,93,0.95) 100%), url('/eagle.png')",
             backgroundBlendMode: "color",
             backgroundSize: "100% 100%, contain",
             backgroundPosition: "center, left",
@@ -129,15 +129,38 @@ export function About() {
             // The PNG carries an opaque grey plate rather than an alpha
             // channel, so a radial fall-off centred on the head dissolves the
             // rectangle and concentrates what's left on the eye and beak.
+            // Both radii MUST stay inside the box: reach = centre ± radius ×
+            // (final stop). An ellipse that runs past an edge is cut off there
+            // while still part-opaque, which paints a hard line across the
+            // section — 62% at 42% used to overshoot the top by 20% and did
+            // exactly that. These radii land ~9% clear of every edge.
             maskImage:
-              "radial-gradient(62% 62% at 41% 42%, #000 40%, transparent 86%)",
+              "radial-gradient(48% 44% at 44% 48%, #000 30%, transparent 88%)",
             WebkitMaskImage:
-              "radial-gradient(62% 62% at 41% 42%, #000 40%, transparent 86%)",
+              "radial-gradient(48% 44% at 44% 48%, #000 30%, transparent 88%)",
           }}
         />
       </div>
 
       <div className="container-kaps relative z-10">
+        {/* ---------- Header — same eyebrow + h2 idiom as every other section ---------- */}
+        <div className="mb-[clamp(1.5rem,4.5vh,3rem)]">
+          <div className="mb-[clamp(0.75rem,2vh,1.25rem)] inline-flex items-center gap-3">
+            <span className="h-px w-8 bg-accent-500" />
+            <span className="text-xs font-600 uppercase tracking-[0.26em] text-accent-300">
+              Who we are
+            </span>
+          </div>
+          <motion.h2
+            {...rise}
+            transition={{ duration: 0.8, ease }}
+            className="max-w-4xl font-display text-[clamp(1.6rem,min(3.6vw,5.2vh),2.9rem)] font-800 leading-[1.08] tracking-[-0.02em] text-white text-balance"
+          >
+            What we <span className="text-accent-400">stand for</span>, and why
+            firms stay.
+          </motion.h2>
+        </div>
+
         {/* ---------- Vision & Mission, as indexed statement rows ---------- */}
         <div className="border-t border-white/10">
           {PILLARS.map((p, i) => (
@@ -145,7 +168,7 @@ export function About() {
               key={p.label}
               {...rise}
               transition={{ duration: 0.8, delay: i * 0.08, ease }}
-              className="group relative grid gap-3 border-b border-white/10 py-[clamp(1rem,3vh,2.25rem)] lg:grid-cols-[9rem_minmax(0,1fr)] lg:gap-8"
+              className="group relative grid gap-3 border-b border-white/10 py-[clamp(1.35rem,4vh,2.75rem)] lg:grid-cols-[9rem_minmax(0,1fr)] lg:gap-8"
             >
               {/* the rule brightens to brand green as the row is read */}
               <span
@@ -154,9 +177,9 @@ export function About() {
               />
 
               <div className="flex items-baseline lg:pt-2">
-                <h2 className="text-xs font-600 uppercase tracking-[0.26em] text-white/45 transition-colors duration-500 group-hover:text-white">
+                <h3 className="text-xs font-600 uppercase tracking-[0.26em] text-white/45 transition-colors duration-500 group-hover:text-white">
                   {p.label}
-                </h2>
+                </h3>
               </div>
 
               <p className="max-w-3xl font-display text-[clamp(1.05rem,min(1.8vw,2.6vh),1.45rem)] font-600 leading-[1.55] tracking-tight text-white/60 transition-colors duration-500 group-hover:text-white/85 text-justify hyphens-none">
@@ -167,7 +190,7 @@ export function About() {
         </div>
 
         {/* ---------- Why firms choose us — four columns, hairline-divided ---------- */}
-        <div className="mt-[clamp(1.5rem,4.5vh,3.5rem)] grid gap-[clamp(1.25rem,3vh,2.5rem)] sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-white/10">
+        <div className="mt-[clamp(2rem,6vh,4.5rem)] grid gap-[clamp(1.5rem,4vh,3rem)] sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-white/10">
           {WHY_US.map((w, i) => (
             <motion.div
               key={w.title}

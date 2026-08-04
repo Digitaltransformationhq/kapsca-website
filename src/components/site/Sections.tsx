@@ -63,12 +63,15 @@ const SECTIONS: { id: string; el: ReactNode; bg: string }[] = [
   {
     id: "about",
     el: <About />,
-    // About's ambient washes live HERE, not inside the section, so they cover
-    // the layer's full box. Painted inside they stopped at the section's edge
-    // and the ~44px corner strip below stayed flat navy — a visible line along
-    // the bottom as the section lifted. Any section with a non-flat background
-    // has to paint it on the layer for the same reason.
-    bg: "bg-navy-950 bg-[radial-gradient(65%_50%_at_12%_0%,rgba(78,167,46,0.12),transparent_62%),radial-gradient(55%_45%_at_100%_100%,rgba(47,80,124,0.3),transparent_65%),radial-gradient(38%_46%_at_86%_50%,rgba(78,167,46,0.11),transparent_68%)]",
+    // About's ambient washes AND its film grain live HERE, not inside the
+    // section, so they cover the layer's full box. Painted inside they stopped
+    // at the section's edge and the ~44px corner strip below stayed flat navy —
+    // a visible line along the bottom as the section lifted. Any section with a
+    // non-flat background has to paint it on the layer for the same reason.
+    // The washes are navy-only — the green blooms that used to sit top-left and
+    // behind the eagle read as a tint over the whole section rather than as
+    // lighting, so the brand green is now carried by the rules and icons alone.
+    bg: "grain bg-navy-950 bg-[radial-gradient(65%_50%_at_12%_0%,rgba(47,80,124,0.22),transparent_62%),radial-gradient(55%_45%_at_100%_100%,rgba(47,80,124,0.3),transparent_65%),radial-gradient(38%_46%_at_86%_50%,rgba(47,80,124,0.18),transparent_68%)]",
   },
   { id: "services", el: <Services />, bg: "bg-white" },
   { id: "team", el: <Team />, bg: "bg-navy-900" },

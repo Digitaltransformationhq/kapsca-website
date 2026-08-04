@@ -897,7 +897,7 @@ function Tile({
       // set of cards rather than one flat slab.
       className={`group relative flex flex-col justify-between overflow-hidden rounded-[16px] ${
         i % 2 === 0 ? "bg-white" : "bg-cloud"
-      } p-[clamp(0.7rem,1.7vh,0.95rem)] text-left ring-1 ring-inset ring-navy-900/[0.09] shadow-[0_1px_2px_rgba(10,23,40,0.04),0_10px_26px_-20px_rgba(10,23,40,0.45)] transition-[background-color,box-shadow,transform] duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:bg-navy-800 hover:shadow-[0_28px_52px_-24px_rgba(10,23,40,0.6)] ${tile.span}`}
+      } p-[clamp(0.85rem,2.05vh,1.2rem)] text-left ring-1 ring-inset ring-navy-900/[0.09] shadow-[0_1px_2px_rgba(10,23,40,0.04),0_10px_26px_-20px_rgba(10,23,40,0.45)] transition-[background-color,box-shadow,transform] duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:bg-navy-800 hover:shadow-[0_28px_52px_-24px_rgba(10,23,40,0.6)] ${tile.span}`}
     >
       {/* corner bloom — only lights up once the tile has gone dark */}
       <span
@@ -913,7 +913,7 @@ function Tile({
       <div className="relative flex items-start justify-between gap-2">
         {/* icon in a filled chip — carries far more weight on the page than a
             bare line mark at this tile size */}
-        <span className="flex h-[clamp(1.7rem,3.7vh,2.15rem)] w-[clamp(1.7rem,3.7vh,2.15rem)] shrink-0 items-center justify-center rounded-[10px] bg-accent-500/12 text-accent-600 transition-colors duration-500 group-hover:bg-accent-500 group-hover:text-white">
+        <span className="flex h-[clamp(1.85rem,4.3vh,2.45rem)] w-[clamp(1.85rem,4.3vh,2.45rem)] shrink-0 items-center justify-center rounded-[10px] bg-accent-500/12 text-accent-600 transition-colors duration-500 group-hover:bg-accent-500 group-hover:text-white">
           <svg
             viewBox="0 0 24 24"
             className="h-1/2 w-1/2 transition-transform duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
@@ -945,7 +945,7 @@ function Tile({
         </span>
       </div>
 
-      <h3 className="relative mt-[clamp(0.6rem,1.9vh,1.15rem)] font-display text-[clamp(0.92rem,1.95vh,1.18rem)] font-800 leading-[1.16] tracking-[-0.015em] text-navy-700 transition-colors duration-500 group-hover:text-white">
+      <h3 className="relative mt-[clamp(0.7rem,2.25vh,1.4rem)] font-display text-[clamp(0.95rem,2.15vh,1.24rem)] font-800 leading-[1.16] tracking-[-0.015em] text-navy-700 transition-colors duration-500 group-hover:text-white">
         {tile.title}
       </h3>
     </motion.button>
@@ -963,7 +963,7 @@ export function Services() {
     <section
       id="services"
       data-section="services"
-      className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden bg-white pt-24 pb-8 sm:pt-28"
+      className="relative flex min-h-[118svh] flex-col justify-center overflow-hidden bg-white pt-28 pb-16 sm:pt-32 sm:pb-20"
     >
       {/* soft top separation from the dark section above */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-navy-900/10 to-transparent" />
@@ -1009,7 +1009,7 @@ export function Services() {
             twelve tiles take a double span — so each row carries a different
             number of tiles (5, 4, then 3) and no two rows read alike. Below lg
             the spans drop away and the tiles pair up, then stack. ---------- */}
-        <div className="mt-[clamp(1.25rem,3.4vh,2.5rem)] grid gap-2 sm:grid-cols-2 lg:grid-cols-6">
+        <div className="mt-[clamp(1.75rem,4.6vh,3.25rem)] grid gap-2.5 sm:grid-cols-2 lg:grid-cols-6">
           {TILES.map((t, i) => (
             <Tile
               key={t.title}
