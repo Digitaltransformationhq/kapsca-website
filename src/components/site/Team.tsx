@@ -182,7 +182,6 @@ function TeamCard({
               : "bg-navy-800 p-7 ring-white/10"
           }`}
         >
-          <span className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-accent-500/15 blur-2xl" />
           <div className="relative">
             <span
               className={`block h-px w-8 bg-accent-500 ${compact ? "mb-2.5" : "mb-4"}`}
@@ -298,8 +297,14 @@ export function Team() {
           </motion.p>
         </div>
 
-        {/* Four cards, centred as a block under the header. */}
-        <div className="mx-auto mt-12 grid grid-cols-2 justify-items-center gap-x-5 gap-y-10 sm:mt-14 sm:w-fit sm:grid-cols-[repeat(4,190px)] sm:gap-x-8">
+        {/* Four cards, centred as a block under the header.
+            `w-full` is load-bearing below sm: this grid is a flex item of a
+            flex-col parent, and `mx-auto` there cancels the cross-axis stretch,
+            so the grid would size to fit-content. The cards' only in-flow
+            content is absolutely positioned, making their max-content width 0 —
+            both 1fr tracks collapsed and the cards vanished. At sm the tracks
+            are a fixed 190px, so fit-content is safe and w-fit takes over. */}
+        <div className="mx-auto mt-12 grid w-full grid-cols-2 justify-items-center gap-x-5 gap-y-10 sm:mt-14 sm:w-fit sm:grid-cols-[repeat(4,190px)] sm:gap-x-8">
           {ASSOCIATES.map((m, i) => (
             <TeamCard key={m.initials} m={m} i={i} compact />
           ))}
