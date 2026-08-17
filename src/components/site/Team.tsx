@@ -129,7 +129,10 @@ function TeamCard({
           setFlipped((f) => !f);
         }
       }}
-      className={`group w-full cursor-pointer select-none [perspective:1400px] ${
+      // `@container` makes the card its own container-query root: every size on
+      // the back face is expressed in cqw, so the whole layout scales with the
+      // card instead of overflowing it when the column gets narrow (mobile).
+      className={`group @container w-full cursor-pointer select-none [perspective:1400px] ${
         // Compact cards run taller so the larger back-face type still fits.
         compact ? "aspect-[4/5.4] max-w-[190px]" : "aspect-[4/5] max-w-[290px]"
       }`}
@@ -161,12 +164,12 @@ function TeamCard({
           {/* name overlay */}
           <div
             className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/90 via-navy-950/20 to-transparent ${
-              compact ? "p-3 pt-12" : "p-4 pt-16"
+              compact ? "p-[6cqw] pt-[25cqw]" : "p-[5.5cqw] pt-[22cqw]"
             }`}
           >
             <h3
               className={`font-display leading-tight text-white ${
-                compact ? "font-800 text-[0.85rem]" : "font-700 text-base"
+                compact ? "font-800 text-[7.2cqw]" : "font-700 text-[5.5cqw]"
               }`}
             >
               {m.name}
@@ -176,36 +179,38 @@ function TeamCard({
 
         {/* ---------- Back: details ---------- */}
         <div
-          className={`absolute inset-0 flex flex-col justify-center rounded-[22px] ring-1 ring-inset shadow-[0_24px_50px_-34px_rgba(10,23,40,0.5)] [-webkit-backface-visibility:hidden] [backface-visibility:hidden] [transform:rotateY(180deg)] ${
+          className={`absolute inset-0 flex flex-col justify-center overflow-hidden rounded-[22px] ring-1 ring-inset shadow-[0_24px_50px_-34px_rgba(10,23,40,0.5)] [-webkit-backface-visibility:hidden] [backface-visibility:hidden] [transform:rotateY(180deg)] ${
             compact
-              ? "bg-white p-3.5 ring-navy-700/10"
-              : "bg-navy-800 p-7 ring-white/10"
+              ? "bg-white p-[7.4cqw] ring-navy-700/10"
+              : "bg-navy-800 p-[9.6cqw] ring-white/10"
           }`}
         >
           <div className="relative">
             <span
-              className={`block h-px w-8 bg-accent-500 ${compact ? "mb-2.5" : "mb-4"}`}
+              className={`block h-px bg-accent-500 ${
+                compact ? "mb-[5.3cqw] w-[17cqw]" : "mb-[5.5cqw] w-[11cqw]"
+              }`}
             />
             {/* Partner cards drop the name here — it already sits on the photo. */}
             {!compact && (
-              <h3 className="font-display text-lg font-700 leading-tight text-white">
+              <h3 className="font-display text-[6.2cqw] font-700 leading-tight text-white">
                 {m.name}
               </h3>
             )}
             <p
               className={`uppercase ${
                 compact
-                  ? "font-extrabold text-[9.5px] leading-[1.35] tracking-[0.1em] text-accent-700"
-                  : "mt-1.5 font-600 text-[11px] tracking-[0.16em] text-accent-300"
+                  ? "font-extrabold text-[5.1cqw] leading-[1.35] tracking-[0.1em] text-accent-700"
+                  : "mt-[1.5cqw] font-600 text-[3.8cqw] tracking-[0.16em] text-accent-300"
               }`}
             >
               {m.tag}
             </p>
             <p
-              className={`${
+              className={`text-justify hyphens-none ${
                 compact
-                  ? "mt-2 text-justify hyphens-none text-[11px] leading-[1.5] text-navy-600"
-                  : "mt-4 text-sm leading-relaxed text-white/65"
+                  ? "mt-[4.2cqw] text-[5.9cqw] leading-[1.5] text-navy-600"
+                  : "mt-[4.8cqw] text-[4.8cqw] leading-relaxed text-white/65"
               }`}
             >
               {m.desc}
